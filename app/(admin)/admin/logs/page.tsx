@@ -15,6 +15,7 @@ import {
 import Link from 'next/link'
 import prisma from '@/lib/db'
 import { format } from 'date-fns'
+import type { SecurityLog } from '@prisma/client'
 
 export const dynamic = 'force-dynamic'
 
@@ -84,7 +85,7 @@ export default async function AdminLogsPage() {
 
                     <div className="divide-y-4 divide-black">
                         {logs.length > 0 ? (
-                            logs.map((log) => (
+                            logs.map((log: SecurityLog) => (
                                 <div key={log.id} className="group hover:bg-[#adff2f]/5 transition-colors p-6 md:p-8 flex flex-col md:flex-row md:items-center gap-6">
                                     {/* Timestamp & Type */}
                                     <div className="md:w-64 shrink-0 flex flex-col gap-2">
