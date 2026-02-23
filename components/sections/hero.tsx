@@ -1,0 +1,86 @@
+'use client'
+
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
+
+export const Marquee = ({ text }: { text: string }) => (
+    <div className="absolute top-0 left-0 w-full bg-black text-neon py-4 border-b-4 border-black overflow-hidden select-none">
+        <div className="marquee flex gap-8">
+            {[...Array(6)].map((_, i) => (
+                <span key={i} className="text-4xl font-extrabold uppercase italic shrink-0 whitespace-nowrap">
+                    {text}
+                </span>
+            ))}
+        </div>
+    </div>
+);
+
+export const Hero = ({ siteSettings }: { siteSettings?: any }) => {
+    // Determine the title lines. If dynamic is provided, split it by newlines.
+    const titleLines = siteSettings?.heroTitle
+        ? siteSettings.heroTitle.split('\n')
+        : []
+
+    const subtitle = siteSettings?.heroSubtitle || ""
+    const marqueeText = siteSettings?.marqueeText || ""
+
+    return (
+        <section className="relative pt-20 pb-32 overflow-hidden border-b-4 border-black">
+            <Marquee text={marqueeText} />
+
+            <div className="max-w-7xl mx-auto px-6 mt-24">
+                <div className="relative inline-block">
+                    <motion.h1
+                        initial={{ opacity: 0, y: 50 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="text-7xl md:text-9xl font-extrabold leading-[0.9] tracking-tighter uppercase mb-12"
+                    >
+                        {titleLines.map((line: string, i: number) => (
+                            <span key={i}>
+                                {line === "ROBUST" ? (
+                                    <span className="bg-black text-neon px-4 inline-block">{line}</span>
+                                ) : line}
+                                {i < titleLines.length - 1 && <br />}
+                            </span>
+                        ))}
+                    </motion.h1>
+
+                    <motion.div
+                        initial={{ opacity: 0, rotate: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, rotate: 12, scale: 1 }}
+                        transition={{ delay: 0.5, duration: 0.5, type: "spring" }}
+                        className="absolute -right-12 top-0 bg-neon border-4 border-black p-4 neo-shadow hidden lg:block"
+                    >
+                        <p className="font-bold uppercase leading-none text-center">
+                            Status: Available <br /> For Hire
+                        </p>
+                    </motion.div>
+                </div>
+
+                <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                    className="max-w-3xl border-l-[8px] border-black pl-8 mt-12"
+                >
+                    <p className="text-2xl font-bold uppercase leading-tight mb-12">
+                        {subtitle}
+                    </p>
+
+                    <div className="flex flex-wrap gap-6">
+                        <button className="bg-black text-white px-10 py-5 text-xl font-bold uppercase neo-shadow-hover transition-all flex items-center gap-4 group">
+                            Explore Work
+                            <motion.span animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
+                                <ArrowRight className="rotate-90" />
+                            </motion.span>
+                        </button>
+                        <button className="bg-neon border-4 border-black px-10 py-5 text-xl font-bold uppercase neo-shadow-hover transition-all">
+                            Get In Touch
+                        </button>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    )
+};

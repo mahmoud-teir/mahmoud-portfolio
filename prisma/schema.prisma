@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// --- Better Auth Models ---
+
+model User {
+  id            String    @id
+  name          String
+  email         String    @unique
+  emailVerified Boolean
+  image         String?
+  cvUrl         String?
+  cvName        String?
+  bio           String?   @db.Text
+  createdAt     DateTime
+  updatedAt     DateTime
+  sessions      Session[]
+  accounts      Account[]
+
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
+
+// --- Portfolio CMS Models ---
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  featured    Boolean  @default(false)
+  image       String?
+  liveUrl     String?
+  githubUrl   String?
+  tags        String[] // Array of tech stack tags
+  order       Int      @default(0) // For custom sorting
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("project")
+}
+
+model Experience {
+  id          String    @id @default(cuid())
+  company     String
+  role        String
+  startDate   DateTime
+  endDate     DateTime? // Null if current position
+  current     Boolean   @default(false)
+  description String?
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("experience")
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  category  String   @default("Frontend") // e.g., Frontend, Backend, Tools
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("skill")
+}
+
+model SecurityLog {
+  id        String   @id @default(cuid())
+  event     String   // e.g., PRODUCTION_BUILD_SUCCESSFUL
+  level     String   @default("INFO") // INFO, WARNING, DANGER
+  details   String?
+  timestamp DateTime @default(now())
+
+  @@map("security_log")
+}
+
+model SiteSettings {
+  id           String   @id @default("global")
+  heroTitle    String   @default("CRAFTING\nROBUST\nDIGITAL\nEXPERIENCES")
+  heroSubtitle String   @default("Software Developer specializing in building high-performance web applications with modern technologies. I turn complex problems into raw, efficient code.")
+  marqueeText  String   @default("Full-Stack Engineer // System Architect // Problem Solver // Brutalist Code //")
+  aboutSkills  String[] @default(["Fast Delivery", "Problem Solver"])
+  contactText  String   @default("Have a project or just want to talk code? My inbox is always open.")
+  githubUrl    String?  @default("#")
+  linkedinUrl  String?  @default("#")
+  twitterUrl   String?  @default("#")
+  displayEmail String?  @default("hello@mahmoud.dev")
+  bioHeadline  String   @default("HEY, I'M MAHMOUD.")
+  bioEst       String   @default("EST. 2019")
+  updatedAt    DateTime @updatedAt
+
+  @@map("site_settings")
+}

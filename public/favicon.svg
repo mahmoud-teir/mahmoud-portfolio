@@ -1,0 +1,8 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background square with thick border -->
+  <rect x="5" y="5" width="90" height="90" fill="white" stroke="black" stroke-width="8"/>
+  <!-- Bold M Shape -->
+  <path d="M20 80V20H35L50 40L65 20H80V80H65V45L50 65L35 45V80H20Z" fill="black"/>
+  <!-- Neon Accent on the left pillar for that brutalist look -->
+  <rect x="24" y="24" width="6" height="52" fill="#A3FF12"/>
+</svg>
