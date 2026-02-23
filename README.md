@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/mahmoud-teir/Mahmoud-Dev/main/public/logo.png" alt="Mahmoud-Dev Logo" width="200">
+  <img src="https://raw.githubusercontent.com/mahmoud-teir/mahmoud-portfolio/main/public/animated-logo.svg" alt="Mahmoud-Dev Animated Logo" width="400">
   <br>
   <b>MAHMOUD.DEV // PORTFOLIO_OS</b>
   <br>
