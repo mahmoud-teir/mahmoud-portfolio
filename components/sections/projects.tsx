@@ -4,9 +4,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { SectionHeader } from '@/components/ui/section-header';
-import type { Project } from '@prisma/client';
 
-export const Projects = ({ projects }: { projects: Project[] }) => {
+export const Projects = ({ projects }: { projects: any[] }) => {
     return (
         <section id="work" className="py-32 bg-white">
             <div className="max-w-7xl mx-auto px-6">
@@ -41,7 +40,7 @@ export const Projects = ({ projects }: { projects: Project[] }) => {
 
                             <div className={`lg:col-span-5 p-12 flex flex-col justify-center bg-white group-hover:bg-neon transition-colors ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
                                 <div className="flex flex-wrap gap-2 mb-6">
-                                    {project.tags.map(tag => (
+                                    {project.tags.map((tag: string) => (
                                         <span key={tag} className="bg-black text-white px-3 py-1 font-bold text-xs uppercase">
                                             {tag}
                                         </span>

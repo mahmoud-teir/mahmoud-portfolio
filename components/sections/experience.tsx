@@ -1,10 +1,9 @@
 'use client'
 
 import { SectionHeader } from '@/components/ui/section-header';
-import type { Experience as ExpModel } from '@prisma/client';
 import { motion } from 'framer-motion';
 
-export const Experience = ({ experiences }: { experiences: ExpModel[] }) => {
+export const Experience = ({ experiences }: { experiences: any[] }) => {
     const formatDateYear = (date: Date) => {
         return new Date(date).getFullYear().toString();
     };

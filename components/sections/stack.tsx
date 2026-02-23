@@ -1,8 +1,7 @@
 import { SectionHeader } from '@/components/ui/section-header';
 import { Code2, Layers, Cpu, Database, Wrench, Palette, Cloud, Terminal } from 'lucide-react';
-import type { Skill } from '@prisma/client';
 
-export const Stack = ({ skills }: { skills: Skill[] }) => {
+export const Stack = ({ skills }: { skills: any[] }) => {
     // Map categories to icons
     const getIconForCategory = (category: string) => {
         switch (category.toLowerCase()) {
