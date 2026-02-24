@@ -7,7 +7,7 @@ export const Marquee = ({ text }: { text: string }) => (
     <div className="absolute top-0 left-0 w-full bg-black text-neon py-4 border-b-4 border-black overflow-hidden select-none">
         <div className="marquee flex gap-8">
             {[...Array(6)].map((_, i) => (
-                <span key={i} className="text-4xl font-extrabold uppercase italic shrink-0 whitespace-nowrap">
+                <span key={i} className="text-2xl md:text-4xl font-extrabold uppercase italic shrink-0 whitespace-nowrap">
                     {text}
                 </span>
             ))}
@@ -34,7 +34,7 @@ export const Hero = ({ siteSettings }: { siteSettings?: any }) => {
                         initial={{ opacity: 0, y: 50 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, ease: "easeOut" }}
-                        className="text-7xl md:text-9xl font-extrabold leading-[0.9] tracking-tighter uppercase mb-12"
+                        className="text-5xl md:text-7xl lg:text-9xl font-extrabold leading-[0.9] tracking-tighter uppercase mb-8 md:mb-12"
                     >
                         {titleLines.map((line: string, i: number) => (
                             <span key={i}>
@@ -62,20 +62,20 @@ export const Hero = ({ siteSettings }: { siteSettings?: any }) => {
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
-                    className="max-w-3xl border-l-[8px] border-black pl-8 mt-12"
+                    className="max-w-3xl border-l-[4px] md:border-l-[8px] border-black pl-6 md:pl-8 mt-12"
                 >
-                    <p className="text-2xl font-bold uppercase leading-tight mb-12">
+                    <p className="text-lg md:text-2xl font-bold uppercase leading-tight mb-10 md:mb-12">
                         {subtitle}
                     </p>
 
-                    <div className="flex flex-wrap gap-6">
-                        <button className="bg-black text-white px-10 py-5 text-xl font-bold uppercase neo-shadow-hover transition-all flex items-center gap-4 group">
+                    <div className="flex flex-col md:flex-row flex-wrap gap-4 md:gap-6">
+                        <button className="bg-black text-white px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl font-bold uppercase neo-shadow-hover transition-all flex items-center justify-center gap-4 group w-full md:w-auto">
                             Explore Work
                             <motion.span animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
                                 <ArrowRight className="rotate-90" />
                             </motion.span>
                         </button>
-                        <button className="bg-neon border-4 border-black px-10 py-5 text-xl font-bold uppercase neo-shadow-hover transition-all">
+                        <button className="bg-neon border-4 border-black px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl font-bold uppercase neo-shadow-hover transition-all w-full md:w-auto">
                             Get In Touch
                         </button>
                     </div>

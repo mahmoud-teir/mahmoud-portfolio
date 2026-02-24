@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
                 animate="visible"
                 className="w-full max-w-2xl relative"
             >
-                <div className="bg-white border-4 border-black p-8 md:p-16 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden">
+                <div className="bg-white border-4 border-black p-6 md:p-16 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] md:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden">
                     {/* Corner Accents */}
                     <div className="absolute top-0 left-0 w-8 h-8 border-b-4 border-r-4 border-black" />
                     <div className="absolute bottom-0 right-0 w-8 h-8 border-t-4 border-l-4 border-black" />
@@ -97,7 +97,7 @@ export default function AdminLoginPage() {
                         <div className="inline-block bg-black text-[#adff2f] px-4 py-1 font-extrabold text-sm mb-4 uppercase tracking-tighter">
                             Protocol_Initiated
                         </div>
-                        <h1 className="text-5xl md:text-7xl font-extrabold uppercase leading-none mb-4" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>
+                        <h1 className="text-4xl md:text-7xl font-extrabold uppercase leading-none mb-4" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>
                             SYSTEM_LOGIN
                         </h1>
                         <p className="text-lg font-bold uppercase tracking-tight border-l-8 border-black pl-4">
@@ -131,7 +131,7 @@ export default function AdminLoginPage() {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="ADMIN@NETWORK.SYS"
                                     required
-                                    className="w-full h-20 pl-16 pr-8 border-4 border-black text-xl font-extrabold uppercase focus:bg-[#adff2f] outline-none transition-all placeholder:text-gray-300"
+                                    className="w-full h-16 md:h-20 pl-12 md:pl-16 pr-4 md:pr-8 border-4 border-black text-lg md:text-xl font-extrabold uppercase focus:bg-[#adff2f] outline-none transition-all placeholder:text-gray-300"
                                 />
                             </div>
                         </motion.div>
@@ -150,32 +150,34 @@ export default function AdminLoginPage() {
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="••••••••"
                                     required
-                                    className="w-full h-20 pl-16 pr-8 border-4 border-black text-xl font-extrabold uppercase focus:bg-[#adff2f] outline-none transition-all placeholder:text-gray-300"
+                                    className="w-full h-16 md:h-20 pl-12 md:pl-16 pr-4 md:pr-8 border-4 border-black text-lg md:text-xl font-extrabold uppercase focus:bg-[#adff2f] outline-none transition-all placeholder:text-gray-300"
                                 />
                             </div>
                         </motion.div>
 
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="w-full md:w-auto flex-grow bg-[#adff2f] border-4 border-black py-6 px-12 text-xl font-extrabold uppercase shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-4"
-                        >
-                            {loading ? 'AUTHENTICATING...' : 'ESTABLISH_SESSION'}
-                            {!loading && <ArrowRight size={24} className="stroke-[3]" />}
-                        </button>
-                        <Link
-                            href="/admin/recovery"
-                            className="w-full md:w-auto text-center border-4 border-black py-6 px-8 font-extrabold uppercase hover:bg-black hover:text-white transition-colors"
-                        >
-                            RECOVERY_PROTOCOL
-                        </Link>
-                        <button
-                            type="button"
-                            onClick={() => router.push('/')}
-                            className="w-full md:w-auto text-center border-4 border-black py-6 px-8 font-extrabold uppercase hover:bg-black hover:text-white transition-colors"
-                        >
-                            TERMINATE
-                        </button>
+                        <div className="flex flex-col md:flex-row gap-4">
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full md:w-auto flex-grow bg-[#adff2f] border-4 border-black py-4 md:py-6 px-6 md:px-12 text-lg md:text-xl font-extrabold uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-4"
+                            >
+                                {loading ? 'AUTHENTICATING...' : 'ESTABLISH_SESSION'}
+                                {!loading && <ArrowRight size={24} className="stroke-[3]" />}
+                            </button>
+                            <Link
+                                href="/admin/recovery"
+                                className="w-full md:w-auto text-center border-4 border-black py-4 md:py-6 px-4 md:px-8 font-extrabold uppercase hover:bg-black hover:text-white transition-colors"
+                            >
+                                RECOVERY_PROTOCOL
+                            </Link>
+                            <button
+                                type="button"
+                                onClick={() => router.push('/')}
+                                className="w-full md:w-auto text-center border-4 border-black py-4 md:py-6 px-4 md:px-8 font-extrabold uppercase hover:bg-black hover:text-white transition-colors"
+                            >
+                                TERMINATE
+                            </button>
+                        </div>
                     </form>
 
                     <motion.div variants={itemVariants} className="mt-16 pt-8 border-t-4 border-black flex flex-wrap gap-8 opacity-40">

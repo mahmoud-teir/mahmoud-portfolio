@@ -38,7 +38,7 @@ export const Projects = ({ projects }: { projects: any[] }) => {
                                 )}
                             </div>
 
-                            <div className={`lg:col-span-5 p-12 flex flex-col justify-center bg-white group-hover:bg-neon transition-colors ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                            <div className={`lg:col-span-5 p-6 md:p-12 flex flex-col justify-center bg-white group-hover:bg-neon transition-colors ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
                                 <div className="flex flex-wrap gap-2 mb-6">
                                     {project.tags.map((tag: string) => (
                                         <span key={tag} className="bg-black text-white px-3 py-1 font-bold text-xs uppercase">
@@ -47,11 +47,11 @@ export const Projects = ({ projects }: { projects: any[] }) => {
                                     ))}
                                 </div>
 
-                                <h3 className="text-4xl font-extrabold uppercase mb-6 leading-none tracking-tighter">
+                                <h3 className="text-3xl md:text-4xl font-extrabold uppercase mb-6 leading-none tracking-tighter">
                                     {project.title}
                                 </h3>
 
-                                <p className="text-lg font-bold uppercase mb-8 leading-tight opacity-80">
+                                <p className="text-base md:text-lg font-bold uppercase mb-8 leading-tight opacity-80">
                                     {project.description}
                                 </p>
 

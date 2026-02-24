@@ -12,6 +12,12 @@
 }
 
 @layer base {
+
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   body {
     @apply font-mono text-black bg-white;
     background-image: radial-gradient(#000 0.5px, transparent 0.5px);

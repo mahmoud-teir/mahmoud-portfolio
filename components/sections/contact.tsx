@@ -48,7 +48,7 @@ export const Contact = ({ contactText, displayEmail }: { contactText?: string, d
                     )}
                     {displayEmail && (
                         <div className="mt-6">
-                            <a href={`mailto:${displayEmail}`} className="inline-block text-2xl md:text-3xl font-black bg-neon px-8 py-3 border-4 border-black hover:bg-black hover:text-[#adff2f] transition-colors uppercase neo-shadow-sm hover:translate-y-1 hover:shadow-none">
+                            <a href={`mailto:${displayEmail}`} className="inline-block text-xl md:text-3xl font-black bg-neon px-6 md:px-8 py-3 border-4 border-black hover:bg-black hover:text-[#adff2f] transition-colors uppercase neo-shadow-sm hover:translate-y-1 hover:shadow-none break-all">
                                 {displayEmail}
                             </a>
                         </div>

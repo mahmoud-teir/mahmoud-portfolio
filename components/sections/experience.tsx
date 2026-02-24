@@ -34,15 +34,15 @@ export const Experience = ({ experiences }: { experiences: any[] }) => {
                                     <div className="inline-block bg-black text-white px-4 py-2 font-extrabold text-lg uppercase neo-shadow-sm mb-6">
                                         {formatDateYear(exp.startDate)} — {exp.current ? 'PRESENT' : exp.endDate ? formatDateYear(exp.endDate) : ''}
                                     </div>
-                                    <h3 className="text-4xl font-extrabold uppercase tracking-tighter mb-2">
+                                    <h3 className="text-3xl md:text-4xl font-extrabold uppercase tracking-tighter mb-2">
                                         {exp.company}
                                     </h3>
-                                    <h4 className="text-xl font-bold uppercase text-neon bg-black px-3 py-1 inline-block mb-6">
+                                    <h4 className="text-lg md:text-xl font-bold uppercase text-neon bg-black px-3 py-1 inline-block mb-6">
                                         {exp.role}
                                     </h4>
 
-                                    <div className="bg-white border-4 border-black p-8 neo-shadow relative z-20 group hover:bg-neon transition-colors duration-300">
-                                        <p className="font-bold uppercase leading-tight text-lg">
+                                    <div className="bg-white border-4 border-black p-6 md:p-8 neo-shadow relative z-20 group hover:bg-neon transition-colors duration-300">
+                                        <p className="font-bold uppercase leading-tight text-base md:text-lg">
                                             {exp.description}
                                         </p>
                                     </div>

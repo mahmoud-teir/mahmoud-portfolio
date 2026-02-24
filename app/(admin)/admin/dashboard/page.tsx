@@ -20,7 +20,7 @@ export default async function AdminDashboardPage() {
     return (
         <div className="space-y-12 max-w-6xl mx-auto font-mono">
             {/* Header Section */}
-            <header className="relative py-12 px-8 border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+            <header className="relative py-8 md:py-12 px-6 md:px-8 border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 bg-black text-[#adff2f] font-black text-[10px] uppercase tracking-widest z-10">
                     NODE_ID: ADMIN_OVERVIEW
                 </div>
@@ -29,7 +29,7 @@ export default async function AdminDashboardPage() {
                         <Activity size={14} className="stroke-[3]" />
                         System_Live
                     </div>
-                    <h1 className="text-6xl md:text-8xl font-black uppercase leading-none tracking-tighter mb-4" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>
+                    <h1 className="text-4xl md:text-8xl font-black uppercase leading-none tracking-tighter mb-4" style={{ WebkitTextStroke: '2px black', color: 'transparent' }}>
                         SYSTEM_OVERVIEW
                     </h1>
                     <p className="text-xl font-bold uppercase border-l-8 border-black pl-6 max-w-2xl text-gray-700">
@@ -47,7 +47,7 @@ export default async function AdminDashboardPage() {
                         key={stat.label}
                         href={stat.href}
                         className={`
-                            group relative border-4 border-black p-10 transition-all text-left
+                            group relative border-4 border-black p-6 md:p-10 transition-all text-left
                             hover:-translate-y-2 hover:shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]
                             ${stat.color === '#adff2f' ? 'bg-[#adff2f] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]' : 'bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]'}
                         `}
@@ -57,7 +57,7 @@ export default async function AdminDashboardPage() {
                             <ArrowRight size={20} className="stroke-[3] opacity-0 group-hover:opacity-100 transition-opacity" />
                         </div>
                         <div className="space-y-1 text-left">
-                            <p className="text-7xl font-black tracking-tighter tabular-nums leading-none">
+                            <p className="text-5xl md:text-7xl font-black tracking-tighter tabular-nums leading-none">
                                 {stat.count.toString().padStart(2, '0')}
                             </p>
                             <p className="text-xs font-black uppercase tracking-[0.2em] text-gray-800">
@@ -71,7 +71,7 @@ export default async function AdminDashboardPage() {
             </div>
 
             {/* Quick Actions */}
-            <section className="bg-white border-4 border-black p-10 shadow-[12px_12px_0px_0px_rgba(173,255,47,0.5)]">
+            <section className="bg-white border-4 border-black p-6 md:p-10 shadow-[8px_8px_0px_0px_rgba(173,255,47,0.5)] md:shadow-[12px_12px_0px_0px_rgba(173,255,47,0.5)]">
                 <div className="flex items-center gap-3 mb-8">
                     <Terminal size={24} className="stroke-[3]" />
                     <h2 className="text-2xl font-black uppercase tracking-tighter">
