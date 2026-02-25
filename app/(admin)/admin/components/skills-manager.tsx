@@ -46,9 +46,9 @@ function SkillForm({
     }
 
     return (
-        <div className="bg-white border-2 border-black brutal-shadow p-6 mb-6">
+        <div className="bg-white border-2 border-black brutal-shadow p-4 md:p-6 mb-6">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-display uppercase tracking-tighter">
+                <h3 className="text-base md:text-lg font-display uppercase tracking-tighter">
                     {isEditing ? 'Edit_Skill' : 'New_Skill'}
                 </h3>
                 <button onClick={onClose} className="hover:text-brutal-pink transition-colors">
@@ -139,7 +139,7 @@ export default function SkillsManager({ skills }: { skills: Skill[] }) {
     }, {} as Record<string, Skill[]>)
 
     return (
-        <div>
+        <div className="mt-12 md:mt-0">
             <div className="flex items-center justify-between mb-8">
                 <div>
                     <h1 className="text-4xl font-display uppercase tracking-tighter">Skills</h1>

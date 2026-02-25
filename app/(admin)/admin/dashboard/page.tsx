@@ -20,8 +20,8 @@ export default async function AdminDashboardPage() {
     return (
         <div className="space-y-12 max-w-6xl mx-auto font-mono">
             {/* Header Section */}
-            <header className="relative py-8 md:py-12 px-6 md:px-8 border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 bg-black text-[#adff2f] font-black text-[10px] uppercase tracking-widest z-10">
+            <header className="relative pt-20 pb-8 md:py-12 px-6 md:px-8 border-4 border-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
+                <div className="absolute top-0 right-0 md:top-0 md:right-0 mt-4 md:mt-0 mr-16 md:mr-0 p-4 bg-black text-[#adff2f] font-black text-[10px] uppercase tracking-widest z-10 w-full sm:w-auto text-center sm:text-right hidden sm:block">
                     NODE_ID: ADMIN_OVERVIEW
                 </div>
                 <div className="relative z-10">

@@ -51,9 +51,9 @@ function ProjectForm({
     }
 
     return (
-        <div className="bg-white border-2 border-black brutal-shadow p-8 mb-6">
-            <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-display uppercase tracking-tighter">
+        <div className="bg-white border-2 border-black brutal-shadow p-6 md:p-8 mb-6">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+                <h3 className="text-lg md:text-xl font-display uppercase tracking-tighter">
                     {isEditing ? 'Edit_Project' : 'New_Project'}
                 </h3>
                 <button onClick={onClose} className="hover:text-brutal-pink transition-colors">
@@ -207,8 +207,8 @@ export default function ProjectsManager({ projects }: { projects: Project[] }) {
     }
 
     return (
-        <div>
-            <div className="flex items-center justify-between mb-8">
+        <div className="mt-12 md:mt-0">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 md:mb-8">
                 <div>
                     <h1 className="text-4xl font-display uppercase tracking-tighter">Projects</h1>
                     <p className="font-mono text-xs uppercase tracking-widest opacity-50 mt-1">
@@ -255,9 +255,9 @@ export default function ProjectsManager({ projects }: { projects: Project[] }) {
                 {projects.map((project) => (
                     <div
                         key={project.id}
-                        className="bg-white border-2 border-black p-6 flex items-start justify-between gap-4 hover:bg-brutal-bg transition-colors"
+                        className="bg-white border-2 border-black p-4 md:p-6 flex flex-col md:flex-row items-start justify-between gap-4 hover:bg-brutal-bg transition-colors"
                     >
-                        <div className="flex-1 min-w-0">
+                        <div className="flex-1 min-w-0 w-full">
                             <div className="flex items-center gap-3 mb-2">
                                 <h3 className="text-lg font-display uppercase tracking-tighter truncate">
                                     {project.title}
@@ -293,7 +293,7 @@ export default function ProjectsManager({ projects }: { projects: Project[] }) {
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2 shrink-0">
+                        <div className="flex items-center gap-2 shrink-0 self-start md:self-auto w-full md:w-auto justify-end md:justify-start border-t-2 border-black md:border-none pt-4 md:pt-0 mt-2 md:mt-0">
                             <button
                                 onClick={() => { setEditingProject(project); setShowForm(true) }}
                                 className="border-2 border-black p-2 hover:bg-neon transition-colors"

@@ -53,9 +53,9 @@ function ExperienceForm({
     }
 
     return (
-        <div className="bg-white border-2 border-black brutal-shadow p-8 mb-6">
-            <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-display uppercase tracking-tighter">
+        <div className="bg-white border-2 border-black brutal-shadow p-6 md:p-8 mb-6">
+            <div className="flex items-center justify-between mb-4 md:mb-6">
+                <h3 className="text-lg md:text-xl font-display uppercase tracking-tighter">
                     {isEditing ? 'Edit_Experience' : 'New_Experience'}
                 </h3>
                 <button onClick={onClose} className="hover:text-brutal-pink transition-colors">
@@ -188,7 +188,7 @@ export default function ExperienceManager({ experiences }: { experiences: Experi
     }
 
     return (
-        <div>
+        <div className="mt-12 md:mt-0">
             <div className="flex items-center justify-between mb-8">
                 <div>
                     <h1 className="text-4xl font-display uppercase tracking-tighter">Experience</h1>
@@ -236,10 +236,10 @@ export default function ExperienceManager({ experiences }: { experiences: Experi
                 {experiences.map((exp) => (
                     <div
                         key={exp.id}
-                        className="bg-white border-2 border-black p-6 hover:bg-brutal-bg transition-colors"
+                        className="bg-white border-2 border-black p-4 md:p-6 hover:bg-brutal-bg transition-colors"
                     >
-                        <div className="flex items-start justify-between gap-4">
-                            <div className="flex-1 min-w-0">
+                        <div className="flex flex-col md:flex-row items-start justify-between gap-4">
+                            <div className="flex-1 min-w-0 w-full">
                                 <div className="flex items-center gap-3 mb-1">
                                     <h3 className="text-lg font-display uppercase tracking-tighter">
                                         {exp.role}
@@ -262,7 +262,7 @@ export default function ExperienceManager({ experiences }: { experiences: Experi
                                 )}
                             </div>
 
-                            <div className="flex items-center gap-2 shrink-0">
+                            <div className="flex items-center gap-2 shrink-0 self-start md:self-auto w-full md:w-auto justify-end md:justify-start border-t-2 border-black md:border-none pt-4 md:pt-0 mt-2 md:mt-0">
                                 <button
                                     onClick={() => { setEditingExp(exp); setShowForm(true) }}
                                     className="border-2 border-black p-2 hover:bg-neon transition-colors"

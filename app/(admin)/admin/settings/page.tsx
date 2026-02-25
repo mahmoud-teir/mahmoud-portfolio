@@ -155,12 +155,12 @@ export default function AdminSettingsPage() {
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="mb-12 inline-flex items-center gap-4 bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+                    className="mb-12 mt-12 md:mt-0 inline-flex items-center gap-4 bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
                 >
                     <Link href="/admin/dashboard" className="p-2 border-2 border-black hover:bg-neon transition-colors">
                         <ArrowLeft className="w-6 h-6" />
                     </Link>
-                    <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter italic">SITE_SETTINGS</h1>
+                    <h1 className="text-3xl md:text-5xl font-black uppercase tracking-tighter italic">SITE_SETTINGS</h1>
                 </motion.div>
 
                 <motion.form
@@ -168,7 +168,7 @@ export default function AdminSettingsPage() {
                     initial="hidden"
                     animate="visible"
                     onSubmit={handleSubmit}
-                    className="space-y-12 bg-white border-4 border-black p-8 md:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+                    className="space-y-12 bg-white border-4 border-black p-6 md:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
                 >
                     {/* Section: Hero */}
                     <div className="space-y-6">
@@ -182,7 +182,7 @@ export default function AdminSettingsPage() {
                                 value={formData.heroTitle}
                                 onChange={(e) => setFormData({ ...formData, heroTitle: e.target.value })}
                                 rows={4}
-                                className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono resize-none"
+                                className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono resize-none text-sm md:text-base"
                             />
                         </div>
 
@@ -192,7 +192,7 @@ export default function AdminSettingsPage() {
                                 value={formData.heroSubtitle}
                                 onChange={(e) => setFormData({ ...formData, heroSubtitle: e.target.value })}
                                 rows={3}
-                                className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono resize-none"
+                                className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono resize-none text-sm md:text-base"
                             />
                         </div>
 
@@ -202,7 +202,7 @@ export default function AdminSettingsPage() {
                                 type="text"
                                 value={formData.marqueeText}
                                 onChange={(e) => setFormData({ ...formData, marqueeText: e.target.value })}
-                                className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                             />
                         </div>
                     </div>
@@ -219,7 +219,7 @@ export default function AdminSettingsPage() {
                                 type="text"
                                 value={formData.bioHeadline}
                                 onChange={(e) => setFormData({ ...formData, bioHeadline: e.target.value })}
-                                className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                             />
                         </div>
 
@@ -229,17 +229,17 @@ export default function AdminSettingsPage() {
                                 type="text"
                                 value={formData.bioEst}
                                 onChange={(e) => setFormData({ ...formData, bioEst: e.target.value })}
-                                className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                             />
                         </div>
 
                         <div className="space-y-3">
                             <label className="text-xl font-black uppercase block">Add Feature Label (e.g. Fast Delivery)</label>
-                            <div className="flex gap-4">
+                            <div className="flex flex-col sm:flex-row gap-4">
                                 <select
                                     value={newSkillIcon}
                                     onChange={(e) => setNewSkillIcon(e.target.value)}
-                                    className="px-4 py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all font-bold font-mono cursor-pointer"
+                                    className="px-4 py-3 md:py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all font-bold font-mono cursor-pointer"
                                 >
                                     {AVAILABLE_ICONS.map(i => (
                                         <option key={i.name} value={i.name}>{i.name}</option>
@@ -250,10 +250,10 @@ export default function AdminSettingsPage() {
                                     value={newSkill}
                                     onChange={(e) => setNewSkill(e.target.value)}
                                     onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddSkill(); } }}
-                                    className="flex-1 px-6 py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                    className="flex-1 px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-neon outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                                     placeholder="Enter short feature name..."
                                 />
-                                <button type="button" onClick={handleAddSkill} className="px-8 bg-black text-white font-black uppercase border-4 border-black hover:bg-neon hover:text-black transition-colors">
+                                <button type="button" onClick={handleAddSkill} className="py-3 px-8 bg-black text-white font-black uppercase border-4 border-black hover:bg-neon hover:text-black transition-colors">
                                     ADD
                                 </button>
                             </div>

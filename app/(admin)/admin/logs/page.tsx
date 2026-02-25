@@ -55,11 +55,11 @@ export default async function AdminLogsPage() {
         <div className="min-h-screen bg-white text-black font-mono selection:bg-neon selection:text-black pt-12">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Header Section */}
-                <div className="mb-12">
+                <div className="mb-12 mt-12 md:mt-0">
                     <div className="inline-block bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden group">
                         <div className="flex flex-col gap-2 relative z-10">
-                            <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter italic flex items-center gap-4">
-                                <Terminal className="w-12 h-12 md:w-16 md:h-16 stroke-[4]" />
+                            <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter italic flex items-center gap-4">
+                                <Terminal className="w-10 h-10 md:w-16 md:h-16 stroke-[4]" />
                                 //_SYSTEM_LOGS
                             </h1>
                             <div className="p-2 bg-black text-[#adff2f] inline-block self-start font-bold text-xs uppercase tracking-[0.2em]">
@@ -72,9 +72,9 @@ export default async function AdminLogsPage() {
                 {/* Logs Container */}
                 <div className="bg-white border-4 border-black shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
                     <div className="border-b-4 border-black bg-black p-4 flex items-center justify-between text-white">
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 md:gap-4">
                             <Activity className="text-[#adff2f] animate-pulse" size={20} />
-                            <span className="font-black uppercase tracking-widest text-sm">active_surveillance_protocol</span>
+                            <span className="font-black uppercase tracking-widest text-xs md:text-sm">active_surveillance_protocol</span>
                         </div>
                         <div className="hidden md:flex items-center gap-6 text-[10px] font-bold uppercase tracking-widest text-gray-500">
                             <span>Status: Nominal</span>

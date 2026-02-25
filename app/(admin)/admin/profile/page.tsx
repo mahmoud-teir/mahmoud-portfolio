@@ -201,9 +201,9 @@ export default function AdminProfilePage() {
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="mb-12 inline-block bg-white border-4 border-black p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
+                    className="mb-8 mt-12 md:mt-0 md:mb-12 inline-block bg-white border-4 border-black p-4 md:p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"
                 >
-                    <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter italic">ACCOUNT_SETTINGS</h1>
+                    <h1 className="text-4xl md:text-7xl font-black uppercase tracking-tighter italic">ACCOUNT_SETTINGS</h1>
                 </motion.div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
@@ -212,11 +212,11 @@ export default function AdminProfilePage() {
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="lg:col-span-4 space-y-8"
+                        className="lg:col-span-4 space-y-6 md:space-y-8"
                     >
                         {/* Profile Image Card */}
-                        <div className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                            <h2 className="text-2xl font-black uppercase mb-6 border-b-4 border-black pb-2">PROFILE_IMAGE</h2>
+                        <div className="bg-white border-4 border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                            <h2 className="text-xl md:text-2xl font-black uppercase mb-6 border-b-4 border-black pb-2">PROFILE_IMAGE</h2>
                             <div
                                 onClick={() => fileInputRef.current?.click()}
                                 className="aspect-square w-full border-4 border-black bg-black overflow-hidden mb-6 relative group cursor-pointer"
@@ -258,8 +258,8 @@ export default function AdminProfilePage() {
                         </div>
 
                         {/* Quick Stats Card */}
-                        <div className="bg-black text-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                            <h3 className="font-black uppercase mb-4 text-[#adff2f] flex items-center gap-2">
+                        <div className="bg-black text-white p-6 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-xs md:text-sm overflow-hidden">
+                            <h3 className="font-black uppercase mb-4 text-[#adff2f] flex items-center gap-2 text-base">
                                 <Activity className="w-5 h-5" />
                                 Quick_Stats
                             </h3>
@@ -280,9 +280,9 @@ export default function AdminProfilePage() {
                         </div>
 
                         {/* CV Upload Card */}
-                        <div className="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                            <h2 className="text-2xl font-black uppercase mb-6 border-b-4 border-black pb-2 text-black">CV_DOCUMENT</h2>
-                            <div className="flex items-center gap-3 mb-6 p-4 border-4 border-black bg-gray-50">
+                        <div className="bg-white border-4 border-black p-6 md:p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                            <h2 className="text-xl md:text-2xl font-black uppercase mb-6 border-b-4 border-black pb-2 text-black">CV_DOCUMENT</h2>
+                            <div className="flex items-center gap-3 mb-6 p-4 border-4 border-black bg-gray-50 overflow-hidden">
                                 <FileText className="w-8 h-8 opacity-50" />
                                 <div>
                                     <p className="font-bold uppercase text-sm">{(session?.user as any)?.cvUrl ? 'CV_DOCUMENT_FOUND' : 'NO_DOCUMENT_FOUND'}</p>
@@ -347,8 +347,8 @@ export default function AdminProfilePage() {
                         animate="visible"
                         className="lg:col-span-8"
                     >
-                        <div className="bg-white border-4 border-black p-8 md:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                            <form onSubmit={handleSubmit} className="space-y-10">
+                        <div className="bg-white border-4 border-black p-6 md:p-12 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                            <form onSubmit={handleSubmit} className="space-y-8 md:space-y-10">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                                     <div className="space-y-3">
                                         <label className="text-xl font-black uppercase block">USERNAME</label>
@@ -356,7 +356,7 @@ export default function AdminProfilePage() {
                                             type="text"
                                             value={formData.username}
                                             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                                            className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                            className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                                             placeholder="ENTER_USERNAME"
                                         />
                                     </div>
@@ -366,7 +366,7 @@ export default function AdminProfilePage() {
                                             type="email"
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                            className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                            className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                                             placeholder="EMAIL@DOMAIN.COM"
                                         />
                                     </div>
@@ -379,7 +379,7 @@ export default function AdminProfilePage() {
                                             type="password"
                                             value={formData.currentPassword}
                                             onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
-                                            className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                            className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                                             placeholder="••••••••••••"
                                         />
                                     </div>
@@ -389,7 +389,7 @@ export default function AdminProfilePage() {
                                             type="password"
                                             value={formData.newPassword}
                                             onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
-                                            className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                            className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                                             placeholder="••••••••••••"
                                         />
                                     </div>
@@ -399,7 +399,7 @@ export default function AdminProfilePage() {
                                             type="password"
                                             value={formData.confirmPassword}
                                             onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                                            className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono"
+                                            className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
                                             placeholder="••••••••••••"
                                         />
                                     </div>
@@ -411,7 +411,7 @@ export default function AdminProfilePage() {
                                         rows={4}
                                         value={formData.bio}
                                         onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-                                        className="w-full px-6 py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono resize-none"
+                                        className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono resize-none text-sm md:text-base"
                                         placeholder="TELL_US_ABOUT_YOU..."
                                     />
                                 </div>
@@ -419,7 +419,7 @@ export default function AdminProfilePage() {
                                 <div className="pt-6">
                                     <button
                                         disabled={loading}
-                                        className={`w-full py-6 bg-[#adff2f] border-4 border-black text-black font-black text-2xl uppercase shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-y-2 hover:shadow-none transition-all flex items-center justify-center gap-4 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        className={`w-full py-4 md:py-6 bg-[#adff2f] border-4 border-black text-black font-black text-xl md:text-2xl uppercase shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-y-2 hover:shadow-none transition-all flex items-center justify-center gap-4 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     >
                                         {loading ? 'SYNCHRONIZING...' : (
                                             <>
@@ -442,12 +442,12 @@ export default function AdminProfilePage() {
                         </div>
 
                         {/* Danger Zone */}
-                        <div className="mt-12">
+                        <div className="mt-8 md:mt-12">
                             <div
                                 onClick={() => setShowDeleteConfirm(true)}
-                                className="bg-black text-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:bg-red-600 transition-colors cursor-pointer group"
+                                className="bg-black text-white p-6 md:p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:bg-red-600 transition-colors cursor-pointer group"
                             >
-                                <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center justify-between mb-2 md:mb-4">
                                     <h3 className="text-2xl font-black uppercase italic text-red-500 group-hover:text-white transition-colors">DANGER_ZONE</h3>
                                     <AlertTriangle className="w-10 h-10 text-red-500 group-hover:text-white group-hover:animate-pulse transition-colors" />
                                 </div>
