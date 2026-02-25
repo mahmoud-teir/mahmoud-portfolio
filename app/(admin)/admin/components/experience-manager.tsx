@@ -189,7 +189,7 @@ export default function ExperienceManager({ experiences }: { experiences: Experi
 
     return (
         <div className="mt-12 md:mt-0">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 md:mb-8">
                 <div>
                     <h1 className="text-4xl font-display uppercase tracking-tighter">Experience</h1>
                     <p className="font-mono text-xs uppercase tracking-widest opacity-50 mt-1">
