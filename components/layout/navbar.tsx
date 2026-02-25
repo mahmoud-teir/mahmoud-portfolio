@@ -34,10 +34,10 @@ export default function Navbar({
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-8 bg-black text-white px-8 py-3 border-4 border-black">
-                    {['Work', 'Stack', 'Bio', 'Contact', 'Admin'].map((item) => (
+                    {['Work', 'Stack', 'Bio', 'Contact'].map((item) => (
                         <a
                             key={item}
-                            href={item === 'Admin' ? '/admin/dashboard' : `#${item.toLowerCase()}`}
+                            href={`#${item.toLowerCase()}`}
                             className="text-sm font-bold uppercase hover:text-neon transition-colors"
                         >
                             {item}
@@ -68,10 +68,10 @@ export default function Navbar({
             {isMobileMenuOpen && (
                 <div className="md:hidden absolute top-full left-0 w-full bg-white border-b-4 border-black flex flex-col shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
                     <nav className="flex flex-col border-b-4 border-black bg-black text-white p-4 gap-4">
-                        {['Work', 'Stack', 'Bio', 'Contact', 'Admin'].map((item) => (
+                        {['Work', 'Stack', 'Bio', 'Contact'].map((item) => (
                             <a
                                 key={item}
-                                href={item === 'Admin' ? '/admin/dashboard' : `#${item.toLowerCase()}`}
+                                href={`#${item.toLowerCase()}`}
                                 onClick={() => setIsMobileMenuOpen(false)}
                                 className="text-lg font-bold uppercase hover:text-neon transition-colors"
                             >
