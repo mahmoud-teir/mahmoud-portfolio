@@ -121,8 +121,8 @@ Ensure you have Node.js (v18+) and npm installed. You will also need:
 ## GitHub History 📈
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=mahmoud-teir&show_icons=true&theme=radical" alt="Mahmoud's GitHub stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=mahmoud-teir&layout=compact&theme=radical" alt="Top Languages" />
+  <img src="https://github-readme-stats-eight-theta.vercel.app/api?username=mahmoud-teir&show_icons=true&theme=radical" alt="Mahmoud's GitHub stats" />
+  <img src="https://github-readme-stats-eight-theta.vercel.app/api/top-langs?username=mahmoud-teir&layout=compact&theme=radical" alt="Top Languages" />
 </p>
 
 ## License 📜
