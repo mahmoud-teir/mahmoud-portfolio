@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { CommandPalette } from '@/components/ui/command-palette';
@@ -16,15 +17,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   modal
 }: {
   children: React.ReactNode
   modal: React.ReactNode
 }) {
+  const nonce = (await headers()).get('x-nonce') ?? undefined;
+
   return (
-    <html lang="en" className={`${jetbrainsMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${jetbrainsMono.variable}`} suppressHydrationWarning nonce={nonce}>
       <body suppressHydrationWarning className="font-mono text-black">
         {children}
         {modal}
