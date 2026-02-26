@@ -1,8 +1,9 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
+import { magicLink } from "better-auth/plugins";
 import prisma from "./db";
 import { Resend } from "resend";
-import { recoveryEmailTemplate } from "./email-templates";
+import { recoveryEmailTemplate, magicLinkEmailTemplate } from "./email-templates";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -75,4 +76,26 @@ export const auth = betterAuth({
             }
         },
     },
+    plugins: [
+        magicLink({
+            sendMagicLink: async ({ email, token, url }, request) => {
+                if (!process.env.RESEND_API_KEY) {
+                    console.warn("⚠️ RESEND_API_KEY not set. Magic Link URL:", url);
+                    return;
+                }
+
+                try {
+                    await resend.emails.send({
+                        from: "onboarding@resend.dev", // Update to verified domain in production
+                        to: email,
+                        subject: "MAHMOUD.DEV // Magic Link Login",
+                        html: magicLinkEmailTemplate(url),
+                    });
+                    console.log(`Magic link email successfully sent to \${email} via Resend.`);
+                } catch (error) {
+                    console.error("Failed to send magic link email via Resend:", error);
+                }
+            },
+        }),
+    ],
 });

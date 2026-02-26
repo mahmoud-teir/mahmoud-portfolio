@@ -29,6 +29,11 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  twoFactorEnabled Boolean?    @default(false)
+  role             String?     @default("VIEWER")
+  twofactors       TwoFactor[]
+  passkeys         Passkey[]
+
   @@map("user")
 }
 
@@ -44,6 +49,7 @@ model Session {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("session")
+  @@index([userId])
 }
 
 model Account {
@@ -63,6 +69,7 @@ model Account {
   updatedAt             DateTime
 
   @@map("account")
+  @@index([userId])
 }
 
 model Verification {
@@ -74,6 +81,7 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+  @@index([identifier])
 }
 
 // --- Portfolio CMS Models ---
@@ -122,7 +130,7 @@ model Skill {
 
 model SecurityLog {
   id        String   @id @default(cuid())
-  event     String   // e.g., PRODUCTION_BUILD_SUCCESSFUL
+  event     String // e.g., PRODUCTION_BUILD_SUCCESSFUL
   level     String   @default("INFO") // INFO, WARNING, DANGER
   details   String?
   timestamp DateTime @default(now())
@@ -146,4 +154,35 @@ model SiteSettings {
   updatedAt    DateTime @updatedAt
 
   @@map("site_settings")
+}
+
+model TwoFactor {
+  id          String @id
+  secret      String
+  backupCodes String
+  userId      String
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([secret])
+  @@index([userId])
+  @@map("twoFactor")
+}
+
+model Passkey {
+  id           String    @id
+  name         String?
+  publicKey    String
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  credentialID String
+  counter      Int
+  deviceType   String
+  backedUp     Boolean
+  transports   String?
+  createdAt    DateTime?
+  aaguid       String?
+
+  @@index([userId])
+  @@index([credentialID])
+  @@map("passkey")
 }

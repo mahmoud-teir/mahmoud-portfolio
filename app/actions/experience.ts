@@ -1,7 +1,8 @@
 "use server"
 
 import prisma from "@/lib/db"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
+import { CACHE_TAGS } from "@/lib/queries"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
 

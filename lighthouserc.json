@@ -1,0 +1,39 @@
+{
+    "ci": {
+        "collect": {
+            "url": [
+                "http://localhost:3000/",
+                "http://localhost:3000/projects",
+                "http://localhost:3000/skills"
+            ],
+            "startServerCommand": "npm run start",
+            "numberOfRuns": 3
+        },
+        "assert": {
+            "preset": "lighthouse:recommended",
+            "assertions": {
+                "categories:performance": [
+                    "warn",
+                    {
+                        "minScore": 0.85
+                    }
+                ],
+                "categories:accessibility": [
+                    "error",
+                    {
+                        "minScore": 0.9
+                    }
+                ],
+                "first-contentful-paint": [
+                    "warn",
+                    {
+                        "maxNumericValue": 2500
+                    }
+                ]
+            }
+        },
+        "upload": {
+            "target": "temporary-public-storage"
+        }
+    }
+}

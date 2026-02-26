@@ -9,3 +9,8 @@ coverage/
 /generated/prisma
 .agents/
 metadata.json
+
+# Testing Reports
+test-results/
+playwright-report/
+playwright/.cache/

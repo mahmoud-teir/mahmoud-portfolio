@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+import { CommandPalette } from '@/components/ui/command-palette';
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -15,11 +16,19 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+  modal
+}: {
+  children: React.ReactNode
+  modal: React.ReactNode
+}) {
   return (
     <html lang="en" className={`${jetbrainsMono.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning className="font-mono text-black">
         {children}
+        {modal}
+        <CommandPalette />
       </body>
     </html>
   );

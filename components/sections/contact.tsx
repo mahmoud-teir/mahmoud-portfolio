@@ -3,31 +3,32 @@
 import { SectionHeader } from '@/components/ui/section-header'
 import { Send, CheckCircle2, AlertCircle } from 'lucide-react'
 import { submitContactForm } from '@/app/actions/contact'
-import { useActionState, useEffect, useRef } from 'react'
-import { useFormStatus } from 'react-dom'
+import { useActionState, useEffect, useRef, useOptimistic } from 'react'
 
 const initialState = {
     success: false,
     error: ''
 }
 
-function SubmitButton() {
-    const { pending } = useFormStatus()
-
+function SubmitButton({ isPending }: { isPending: boolean }) {
     return (
         <button
             className="w-full py-6 bg-black text-white font-extrabold text-2xl uppercase neo-shadow hover:translate-y-2 hover:shadow-none transition-all flex items-center justify-center gap-4 group disabled:opacity-50 disabled:cursor-not-allowed"
             type="submit"
-            disabled={pending}
+            disabled={isPending}
         >
-            {pending ? 'TRANSMITTING...' : 'Send_Message'}
-            {!pending && <Send className="text-neon group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+            {isPending ? 'TRANSMITTING...' : 'Send_Message'}
+            {!isPending && <Send className="text-neon group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
         </button>
     )
 }
 
 export const Contact = ({ contactText, displayEmail }: { contactText?: string, displayEmail?: string }) => {
-    const [state, formAction] = useActionState(submitContactForm, initialState)
+    const [state, formAction, isPending] = useActionState(submitContactForm, initialState)
+    const [optimisticState, addOptimistic] = useOptimistic(
+        { isPending, success: state?.success, error: state?.error },
+        (currentState, newProps: { isPending: boolean }) => ({ ...currentState, ...newProps })
+    )
     const formRef = useRef<HTMLFormElement>(null)
 
     useEffect(() => {
@@ -35,6 +36,11 @@ export const Contact = ({ contactText, displayEmail }: { contactText?: string, d
             formRef.current?.reset()
         }
     }, [state?.success])
+
+    const handleFormSubmit = async (formData: FormData) => {
+        addOptimistic({ isPending: true })
+        formAction(formData)
+    }
 
     return (
         <section id="contact" className="py-32 bg-white">
@@ -55,18 +61,18 @@ export const Contact = ({ contactText, displayEmail }: { contactText?: string, d
                     )}
                 </div>
 
-                <form ref={formRef} action={formAction} className="space-y-8">
-                    {state?.success && (
+                <form ref={formRef} action={handleFormSubmit} className="space-y-8">
+                    {optimisticState?.success && (
                         <div className="bg-[#adff2f]/10 border-4 border-[#adff2f] text-black px-6 py-4 font-extrabold uppercase text-sm flex items-center gap-3">
                             <CheckCircle2 size={24} className="text-black" />
                             Message Transmitted Successfully. I will be in touch shortly.
                         </div>
                     )}
 
-                    {state?.error && (
+                    {optimisticState?.error && (
                         <div className="bg-red-50 border-4 border-red-600 text-red-600 px-6 py-4 font-bold uppercase text-sm flex items-center gap-3">
                             <AlertCircle size={20} />
-                            {state.error}
+                            {optimisticState.error}
                         </div>
                     )}
 
@@ -104,7 +110,7 @@ export const Contact = ({ contactText, displayEmail }: { contactText?: string, d
                         />
                     </div>
 
-                    <SubmitButton />
+                    <SubmitButton isPending={optimisticState.isPending} />
                 </form>
             </div>
         </section>

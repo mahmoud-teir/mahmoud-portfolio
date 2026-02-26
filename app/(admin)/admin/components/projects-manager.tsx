@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
+import React, { useState, useTransition, useOptimistic } from 'react'
 import { createProject, updateProject, deleteProject } from '@/app/actions/projects'
 import { Plus, Pencil, Trash2, X, Star, ExternalLink, Github, Image as ImageIcon } from 'lucide-react'
 import { UploadButton } from '@/lib/uploadthing'
@@ -185,6 +185,11 @@ export default function ProjectsManager({ projects }: { projects: Project[] }) {
     const [notification, setNotification] = useState<{ msg: string, type: 'success' | 'error' } | null>(null)
     const [confirmDelete, setConfirmDelete] = useState<{ id: string } | null>(null)
 
+    const [optimisticProjects, removeOptimisticProject] = useOptimistic(
+        projects,
+        (state, idToRemove: string) => state.filter((p) => p.id !== idToRemove)
+    )
+
     const showToast = (msg: string, type: 'success' | 'error' = 'success') => {
         setNotification({ msg, type })
     }
@@ -196,6 +201,7 @@ export default function ProjectsManager({ projects }: { projects: Project[] }) {
     const performDelete = () => {
         if (!confirmDelete) return
         startTransition(async () => {
+            removeOptimisticProject(confirmDelete.id)
             try {
                 await deleteProject(confirmDelete.id)
                 showToast('PROJECT_DELETED', 'success')
@@ -212,7 +218,7 @@ export default function ProjectsManager({ projects }: { projects: Project[] }) {
                 <div>
                     <h1 className="text-4xl font-display uppercase tracking-tighter">Projects</h1>
                     <p className="font-mono text-xs uppercase tracking-widest opacity-50 mt-1">
-                        {projects.length} total
+                        {optimisticProjects.length} total
                     </p>
                 </div>
                 <button

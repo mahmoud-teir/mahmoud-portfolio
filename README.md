@@ -24,7 +24,7 @@
 
 **Mahmoud-Dev** is an open-source, full-stack portfolio application designed to be more than just a static page. It functions as a complete digital operating system (`PORTFOLIO_OS`), featuring a unique **Brutalist Design System** that emphasizes bold typography, high-contrast borders, and neon accents. 
 
-This project isn't just about displaying skills; it's about providing a fully functional, authentic backend experience where all data flows dynamically from a PostgreSQL database.
+This project isn't just about displaying skills; it's about providing a fully functional, authentic backend experience where all data flows dynamically from a PostgreSQL database, leveraging cutting-edge web technologies like **React 19** and advanced **Next.js** routing patterns (Intercepting Routes, Parallel Routes, and Suspense Streaming).
 
 ## Architecture & Tech Stack 🧰
 
@@ -37,11 +37,11 @@ The architecture focuses on edge-ready performance, type-safe robust integration
     <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
 </div>
 
-### UI / Design System
+### UI / Design System & State Management
 <div>
     <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS v4" />
     <img src="https://img.shields.io/badge/framer--motion-%230055FF.svg?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion" />
-    <img src="https://img.shields.io/badge/lucide--react-%23F24E1E.svg?style=for-the-badge&logo=lucide&logoColor=white" alt="Lucide Icons" />
+    <img src="https://img.shields.io/badge/nuqs-%23000000.svg?style=for-the-badge&logo=react&logoColor=white" alt="nuqs" />
 </div>
 
 ### Backend & Database
@@ -58,15 +58,17 @@ The architecture focuses on edge-ready performance, type-safe robust integration
     <img src="https://img.shields.io/badge/Resend-%23000000.svg?style=for-the-badge&logo=resend&logoColor=white" alt="Resend" />
 </div>
 
-## Admin OS Features ⚙️
+## Admin OS & Frontend Features ⚙️
 
-The portfolio includes a protected administration panel mapped to `/admin/dashboard`. It features:
+The portfolio includes a highly responsive, app-like frontend and a protected administration panel mapped to `/admin/dashboard`. Key features include:
 
-- **🔐 Better Auth Protocol**: Biometric-style login interface with real-time session tracking.
-- **📝 Dynamic Content Manager**: Update your Bio, Header, Social Links, and Resumé right from the dashboard.
+- **⚛️ React 19 Mastery**: Forms and state management utilize the latest React 19 features like `useActionState`, `useFormStatus`, and `useOptimistic` for instant UI feedback and zero-layout-shift mutations.
+- **🗺️ Advanced Next.js Routing**: Implements Intercepting Routes & Parallel Routes (e.g., viewing a project opens a modal over the home page instead of navigating away) and Streaming with `Suspense` for blazing fast initial loads.
+- **🔗 Magic Link & Biometric Auth**: Powered by Better Auth, the login supports seamless passwordless Magic Link authentication alongside traditional biometrics and robust session tracking.
+- **📝 Dynamic Content Manager**: Update your Bio, Header, Social Links, and Resumé right from the dashboard with optimistic UI updates.
 - **💼 Modular Experience/Projects**: Full CRUD operations for career history and project portfolios.
 - **🛡️ Security Logging**: Every admin action (logins, logouts, edits, deletes) is tracked and audited in the `SecurityLog` table.
-- **🟢 Brutalist UI Elements**: High-contrast, custom-designed alert and confirm dialogs bypassing native browser popups.
+- **🟢 Brutalist UI Elements**: High-contrast, custom-designed alert and confirm dialogs, loading skeletons, and modals bypassing native browser structures.
 
 ## Getting Started 🚀
 
@@ -120,7 +122,7 @@ Ensure you have Node.js (v18+) and npm installed. You will also need:
 
 <p align="center">
   <img src="https://github-readme-stats.vercel.app/api?username=mahmoud-teir&show_icons=true&theme=radical" alt="Mahmoud's GitHub stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=mahmoud-teir&layout=compact&theme=radical" alt="Top Languages" />
+  <img src="https://github-readme-stats.vercel.app/api/top-langs?username=mahmoud-teir&layout=compact&theme=radical" alt="Top Languages" />
 </p>
 
 ## License 📜

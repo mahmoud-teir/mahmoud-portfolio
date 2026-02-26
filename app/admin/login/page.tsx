@@ -13,6 +13,29 @@ export default function AdminLoginPage() {
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
+    const [magicLinkSent, setMagicLinkSent] = useState(false)
+
+    const handleMagicLink = async () => {
+        if (!email) {
+            setError('System Error: Identity Pointer Required')
+            return
+        }
+        setError('')
+        setLoading(true)
+
+        try {
+            const result = await (signIn as any).magicLink({ email, callbackURL: '/admin/dashboard' })
+            if (result?.error) {
+                setError(result.error.message || 'Access Denied: Protocol Failure')
+            } else {
+                setMagicLinkSent(true)
+            }
+        } catch {
+            setError('System Error: Authentication Service Unavailable')
+        } finally {
+            setLoading(false)
+        }
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -116,6 +139,17 @@ export default function AdminLoginPage() {
                         </motion.div>
                     )}
 
+                    {magicLinkSent && (
+                        <motion.div
+                            initial={{ scale: 0.95, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            className="bg-[#adff2f] border-4 border-black text-black px-6 py-4 mb-10 font-bold uppercase text-sm flex items-center gap-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                        >
+                            <Terminal size={20} />
+                            MAGIC_LINK_DISPATCHED: Check your uplink (Inbox).
+                        </motion.div>
+                    )}
+
                     <form onSubmit={handleSubmit} className="space-y-10">
                         <motion.div variants={itemVariants} className="relative">
                             <label className="absolute -top-3 left-6 bg-white px-2 text-xs font-extrabold uppercase border-2 border-black z-10">
@@ -155,28 +189,40 @@ export default function AdminLoginPage() {
                             </div>
                         </motion.div>
 
-                        <div className="flex flex-col md:flex-row gap-4">
+                        <div className="flex flex-col gap-4">
                             <button
                                 type="submit"
-                                disabled={loading}
-                                className="w-full md:w-auto flex-grow bg-[#adff2f] border-4 border-black py-4 md:py-6 px-6 md:px-12 text-lg md:text-xl font-extrabold uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-4"
+                                disabled={loading || magicLinkSent}
+                                className="w-full bg-[#adff2f] border-4 border-black py-4 md:py-6 px-6 md:px-12 text-lg md:text-xl font-extrabold uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all disabled:opacity-50 flex items-center justify-center gap-4"
                             >
-                                {loading ? 'AUTHENTICATING...' : 'ESTABLISH_SESSION'}
-                                {!loading && <ArrowRight size={24} className="stroke-[3]" />}
+                                {loading && !magicLinkSent ? 'AUTHENTICATING...' : 'ESTABLISH_SESSION'}
+                                {!loading && <ArrowRight size={20} className="stroke-[3]" />}
                             </button>
-                            <Link
-                                href="/admin/recovery"
-                                className="w-full md:w-auto text-center border-4 border-black py-4 md:py-6 px-4 md:px-8 font-extrabold uppercase hover:bg-black hover:text-white transition-colors"
-                            >
-                                RECOVERY_PROTOCOL
-                            </Link>
+
                             <button
                                 type="button"
-                                onClick={() => router.push('/')}
-                                className="w-full md:w-auto text-center border-4 border-black py-4 md:py-6 px-4 md:px-8 font-extrabold uppercase hover:bg-black hover:text-white transition-colors"
+                                onClick={handleMagicLink}
+                                disabled={loading || magicLinkSent}
+                                className="w-full text-center border-4 border-black py-4 md:py-6 px-4 md:px-8 font-extrabold uppercase hover:bg-black hover:text-[#adff2f] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
                             >
-                                TERMINATE
+                                MAGIC_LINK_AUTH
                             </button>
+
+                            <div className="flex flex-col md:flex-row gap-4">
+                                <Link
+                                    href="/admin/recovery"
+                                    className="w-full md:w-1/2 text-center border-4 border-black py-4 px-4 font-extrabold uppercase hover:bg-black hover:text-white transition-colors"
+                                >
+                                    RECOVERY_PROTOCOL
+                                </Link>
+                                <button
+                                    type="button"
+                                    onClick={() => router.push('/')}
+                                    className="w-full md:w-1/2 text-center border-4 border-black py-4 px-4 font-extrabold uppercase hover:bg-black hover:text-white transition-colors"
+                                >
+                                    TERMINATE
+                                </button>
+                            </div>
                         </div>
                     </form>
 

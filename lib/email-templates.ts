@@ -196,3 +196,94 @@ export const contactEmailTemplate = (name: string, email: string, message: strin
 </body>
 </html>
 `;
+
+export const magicLinkEmailTemplate = (url: string) => `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .container {
+      max-width: 600px;
+      margin: 40px auto;
+      border: 4px solid #000000;
+      background-color: #ffffff;
+      padding: 40px;
+      box-shadow: 16px 16px 0px 0px #000000;
+    }
+    .header {
+      background-color: #000000;
+      color: #adff2f;
+      padding: 10px 20px;
+      display: inline-block;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+    .title {
+      font-size: 48px;
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+    .description {
+      font-size: 18px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-left: 8px solid #000000;
+      padding-left: 20px;
+      margin-bottom: 40px;
+    }
+    .button-container {
+      margin-top: 40px;
+      margin-bottom: 40px;
+    }
+    .button {
+      background-color: #adff2f;
+      color: #000000;
+      border: 4px solid #000000;
+      padding: 20px 40px;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      display: inline-block;
+      box-shadow: 8px 8px 0px 0px #000000;
+    }
+    .footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 4px solid #000000;
+      font-size: 10px;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #666666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">Authentication_Protocol</div>
+    <div class="title">MAGIC_LINK_ACCESS</div>
+    <div class="description">Secure access requested. Click below to authenticate your session.</div>
+    
+    <div class="button-container">
+      <a href="${url}" class="button">AUTHENTICATE_NOW</a>
+    </div>
+    
+    <p style="font-size: 12px; color: #666;">If you didn't request this magic link, ignore this transmission. This link expires shortly.</p>
+    
+    <div class="footer">
+      MAHMOUD.DEV_OS // AUTH_PROTOCOL // SECURE_TRANSMISSION
+    </div>
+  </div>
+</body>
+</html>
+`;

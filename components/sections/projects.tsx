@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { SectionHeader } from '@/components/ui/section-header';
 
 export const Projects = ({ projects }: { projects: any[] }) => {
@@ -26,15 +27,22 @@ export const Projects = ({ projects }: { projects: any[] }) => {
                             viewport={{ once: true }}
                             className="group grid grid-cols-1 lg:grid-cols-12 gap-0 border-4 border-black neo-shadow-hover transition-all overflow-hidden bg-white"
                         >
-                            <div className={`lg:col-span-7 border-black border-b-4 lg:border-b-0 ${i % 2 === 0 ? 'lg:border-r-4' : 'lg:border-l-4 lg:order-2'} overflow-hidden bg-black relative min-h-[400px]`}>
+                            <div className={`lg:col-span-7 border-black border-b-4 lg:border-b-0 ${i % 2 === 0 ? 'lg:border-r-4' : 'lg:border-l-4 lg:order-2'} bg-black relative min-h-[400px]`}>
                                 {project.image && (
-                                    <Image
-                                        src={project.image}
-                                        alt={project.title}
-                                        fill
-                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-105 group-hover:scale-100"
-                                        referrerPolicy="no-referrer"
-                                    />
+                                    <Link href={`/project/${project.id}`} className="block w-full h-full relative cursor-pointer overflow-hidden z-10 group/img">
+                                        <Image
+                                            src={project.image}
+                                            alt={project.title}
+                                            fill
+                                            className="w-full h-full object-cover grayscale group-hover/img:grayscale-0 transition-all duration-500 scale-105 group-hover/img:scale-100"
+                                            referrerPolicy="no-referrer"
+                                        />
+                                        <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
+                                            <span className="bg-[#adff2f] text-black font-black uppercase px-6 py-3 border-4 border-black text-sm brutal-shadow hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all">
+                                                View_Details
+                                            </span>
+                                        </div>
+                                    </Link>
                                 )}
                             </div>
 

@@ -103,6 +103,7 @@ export async function updateProject(id: string, data: FormData) {
         revalidatePath("/projects")
         revalidatePath("/")
         revalidatePath(`/admin/dashboard`)
+        revalidatePath(`/admin/dashboard`)
         return { success: true, project }
     } catch (error) {
         console.error("Failed to update project:", error)

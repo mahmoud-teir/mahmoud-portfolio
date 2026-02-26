@@ -1,7 +1,9 @@
 'use server'
 
+import * as React from 'react'
 import { Resend } from 'resend'
-import { contactEmailTemplate } from '@/lib/email-templates'
+import ContactFormEmail from '@/emails/contact-form'
+import { render } from '@react-email/components'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -24,7 +26,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
             from: 'Contact Form <onboarding@resend.dev>', // Update to your verified domain in production
             to: 'mahmoudteirbusiness@gmail.com', // Where you want to receive the emails
             subject: `New Contact from ${name} (${email})`,
-            html: contactEmailTemplate(name, email, message),
+            html: await render(React.createElement(ContactFormEmail, { name, email, message }) as React.ReactElement),
             replyTo: email,
         })
 

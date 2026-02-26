@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useTransition } from 'react'
+import React, { useState, useTransition, useOptimistic } from 'react'
 import { createExperience, updateExperience, deleteExperience } from '@/app/actions/experience'
 import { Plus, Pencil, Trash2, X, Calendar } from 'lucide-react'
 import { BrutalistToast, BrutalistConfirm } from './brutalist-ui'
@@ -162,6 +162,11 @@ export default function ExperienceManager({ experiences }: { experiences: Experi
     const [notification, setNotification] = useState<{ msg: string, type: 'success' | 'error' } | null>(null)
     const [confirmDelete, setConfirmDelete] = useState<{ id: string } | null>(null)
 
+    const [optimisticExperiences, removeOptimisticExperience] = useOptimistic(
+        experiences,
+        (state, idToRemove: string) => state.filter((exp) => exp.id !== idToRemove)
+    )
+
     const showToast = (msg: string, type: 'success' | 'error' = 'success') => {
         setNotification({ msg, type })
     }
@@ -173,6 +178,7 @@ export default function ExperienceManager({ experiences }: { experiences: Experi
     const performDelete = () => {
         if (!confirmDelete) return
         startTransition(async () => {
+            removeOptimisticExperience(confirmDelete.id)
             try {
                 await deleteExperience(confirmDelete.id)
                 showToast('EXPERIENCE_DELETED', 'success')
@@ -193,7 +199,7 @@ export default function ExperienceManager({ experiences }: { experiences: Experi
                 <div>
                     <h1 className="text-4xl font-display uppercase tracking-tighter">Experience</h1>
                     <p className="font-mono text-xs uppercase tracking-widest opacity-50 mt-1">
-                        {experiences.length} total
+                        {optimisticExperiences.length} total
                     </p>
                 </div>
                 <button
@@ -233,7 +239,7 @@ export default function ExperienceManager({ experiences }: { experiences: Experi
             />
 
             <div className="space-y-4">
-                {experiences.map((exp) => (
+                {optimisticExperiences.map((exp) => (
                     <div
                         key={exp.id}
                         className="bg-white border-2 border-black p-4 md:p-6 hover:bg-brutal-bg transition-colors"

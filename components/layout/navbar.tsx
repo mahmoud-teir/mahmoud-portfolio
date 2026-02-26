@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import { Terminal, Download, Menu, X } from 'lucide-react'
+import { Terminal, Download, Menu, X, Search } from 'lucide-react'
 
 export default function Navbar({
     cvUrl,
@@ -43,6 +43,12 @@ export default function Navbar({
                             {item}
                         </a>
                     ))}
+                    <button
+                        onClick={() => window.dispatchEvent(new Event('open-command-palette'))}
+                        className="flex items-center gap-2 text-sm font-bold uppercase text-[#adff2f] hover:text-white transition-colors border-l-2 border-gray-800 pl-8 ml-2"
+                    >
+                        Search <Search size={16} className="stroke-[3]" /> <span className="text-xs opacity-50 ml-1 border-2 border-gray-800 px-1">CMD+K</span>
+                    </button>
                 </nav>
 
                 {/* Desktop CV Button */}
@@ -68,6 +74,15 @@ export default function Navbar({
             {isMobileMenuOpen && (
                 <div className="md:hidden absolute top-full left-0 w-full bg-white border-b-4 border-black flex flex-col shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
                     <nav className="flex flex-col border-b-4 border-black bg-black text-white p-4 gap-4">
+                        <button
+                            onClick={() => {
+                                setIsMobileMenuOpen(false)
+                                window.dispatchEvent(new Event('open-command-palette'))
+                            }}
+                            className="flex items-center justify-between text-lg font-bold uppercase text-[#adff2f] hover:text-white transition-colors pb-4 border-b-2 border-gray-800"
+                        >
+                            Search OS <Search size={20} className="stroke-[3]" />
+                        </button>
                         {['Work', 'Stack', 'Bio', 'Contact'].map((item) => (
                             <a
                                 key={item}

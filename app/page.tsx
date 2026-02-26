@@ -1,5 +1,5 @@
 import React from 'react';
-import prisma from '@/lib/db';
+import { getCachedSkills, getCachedProjects, getCachedExperiences, getCachedUser, getCachedSiteSettings } from '@/lib/queries';
 
 // Layout
 import Navbar from '@/components/layout/navbar';
@@ -13,20 +13,17 @@ import { Experience } from '@/components/sections/experience';
 import { Bio } from '@/components/sections/bio';
 import { Contact } from '@/components/sections/contact';
 
-// Opt out of caching if we want fresh data immediately, or rely on ISR/revalidatePath
-export const dynamic = 'force-dynamic';
+// Remove force-dynamic to allow ISR and Static Rendering
+// export const dynamic = 'force-dynamic';
 
 export default async function PortfolioPage() {
-  // Fetch data in parallel for performance
+  // Fetch cached data in parallel for optimal performance
   const [skills, projects, experiences, adminUser, siteSettings] = await Promise.all([
-    prisma.skill.findMany({ orderBy: { order: 'asc' } }),
-    prisma.project.findMany({
-      where: { featured: true },
-      orderBy: { order: 'asc' }
-    }),
-    prisma.experience.findMany({ orderBy: { order: 'asc' } }),
-    prisma.user.findFirst({ orderBy: { updatedAt: 'desc' } }),
-    prisma.siteSettings.findUnique({ where: { id: "global" } })
+    getCachedSkills(),
+    getCachedProjects(),
+    getCachedExperiences(),
+    getCachedUser(),
+    getCachedSiteSettings()
   ]);
 
   return (
