@@ -9,7 +9,7 @@ export const Footer = ({ siteSettings }: { siteSettings?: any }) => (
             </div>
 
             <p className="text-sm font-bold uppercase text-center md:text-left leading-relaxed opacity-70">
-                © {new Date().getFullYear()} Mahmoud. <br />
+                © {new Date().getFullYear()} Mahmoud Teir. All Rights Reserved.<br />
                 Built with passion and radical intent.
             </p>
 

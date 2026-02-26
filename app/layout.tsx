@@ -10,8 +10,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'MAHMOUD.DEV | Full-Stack Engineer',
+  title: 'MAHMOUD TEIR | Full-Stack Engineer',
   description: 'Software Developer specializing in building high-performance web applications with modern technologies. I turn complex problems into raw, efficient code.',
+  authors: [{ name: 'Mahmoud Teir' }],
+  creator: 'Mahmoud Teir',
   icons: {
     icon: '/favicon.svg',
   },
