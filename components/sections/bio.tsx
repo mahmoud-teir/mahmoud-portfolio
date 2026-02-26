@@ -16,9 +16,9 @@ export const Bio = ({ bio, image, aboutSkills, bioHeadline, bioEst }: { bio?: st
     return (
         <section id="bio" className="py-32 border-y-4 border-black bg-neon select-none">
             <div className="max-w-7xl mx-auto px-6">
-                <div className="grid lg:grid-cols-2 gap-16 items-center">
+                <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
                     <div className="relative">
-                        <div className="aspect-square border-4 border-black neo-shadow overflow-hidden bg-black group">
+                        <div className="relative aspect-square border-4 border-black neo-shadow overflow-hidden bg-black group">
                             <Image
                                 src={image || "https://lh3.googleusercontent.com/aida-public/AB6AXuCN0-WWY0WN4jlxRmaYJFQukBBdesaswAi6-nMql4-nV6KYveZUcP5F0Qehj55N1UcBqOgD_IuCVTNA_-SR4-yqcIeSKpPmRyfLTyGPjCLI5_LDeJ-gpkJWanDenTrmthRgql3keV8sVUvB4Lq7xhMb16Bx96czZc2VJZ1oDmFcInO58suY3vsDGMZgcNtyNdjfdWZiHAfNki3bAfCVScOZwYt3P_wVI3Ji1KrxKlpf-1DUlx4uIZEwLKa3j8ZWnghG8cKNgjJK4Mlu"}
                                 alt="Mahmoud"
@@ -32,9 +32,9 @@ export const Bio = ({ bio, image, aboutSkills, bioHeadline, bioEst }: { bio?: st
                         </div>
                     </div>
 
-                    <div className="bg-white border-4 border-black p-12 neo-shadow">
-                        <h2 className="text-5xl font-extrabold uppercase mb-8 italic tracking-tighter">{bioHeadline || "HEY, I'M MAHMOUD."}</h2>
-                        <div className="space-y-6 text-xl font-bold uppercase leading-tight">
+                    <div className="bg-white border-4 border-black p-6 md:p-12 neo-shadow">
+                        <h2 className="text-4xl md:text-5xl font-extrabold uppercase mb-6 md:mb-8 italic tracking-tighter">{bioHeadline || "HEY, I'M MAHMOUD."}</h2>
+                        <div className="space-y-4 md:space-y-6 text-lg md:text-xl font-bold uppercase leading-tight">
                             {paragraphs.map((p, idx) => (
                                 <p key={idx}>{p}</p>
                             ))}

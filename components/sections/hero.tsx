@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
 export const Marquee = ({ text }: { text: string }) => (
     <div className="absolute top-0 left-0 w-full bg-black text-neon py-4 border-b-4 border-black overflow-hidden select-none">
@@ -69,15 +70,13 @@ export const Hero = ({ siteSettings }: { siteSettings?: any }) => {
                     </p>
 
                     <div className="flex flex-col md:flex-row flex-wrap gap-4 md:gap-6">
-                        <button className="bg-black text-white px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl font-bold uppercase neo-shadow-hover transition-all flex items-center justify-center gap-4 group w-full md:w-auto">
+                        <Link href="#work" className="bg-black text-white px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl font-bold uppercase neo-shadow-hover transition-all flex items-center justify-center gap-4 group w-full md:w-auto">
                             Explore Work
-                            <motion.span animate={{ y: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
-                                <ArrowRight className="rotate-90" />
-                            </motion.span>
-                        </button>
-                        <button className="bg-neon border-4 border-black px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl font-bold uppercase neo-shadow-hover transition-all w-full md:w-auto">
+                            <ArrowRight className="rotate-90 group-hover:translate-y-2 transition-transform duration-300" />
+                        </Link>
+                        <Link href="#contact" className="bg-neon border-4 border-black text-black px-8 md:px-10 py-4 md:py-5 text-lg md:text-xl font-bold uppercase neo-shadow-hover flex items-center justify-center transition-all w-full md:w-auto text-center">
                             Get In Touch
-                        </button>
+                        </Link>
                     </div>
                 </motion.div>
             </div>
