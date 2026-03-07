@@ -8,7 +8,7 @@ import { recoveryEmailTemplate, magicLinkEmailTemplate } from "./email-templates
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const auth = betterAuth({
-    baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "https://mahmoud-portfolio-phi.vercel.app",
+    baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "https://mahmoud-teir.vercel.app/",
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
