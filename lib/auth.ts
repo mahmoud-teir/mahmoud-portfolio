@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { magicLink, twoFactor, passkey } from "better-auth/plugins";
+import { magicLink, twoFactor } from "better-auth/plugins";
+import { passkey } from "@better-auth/passkey";
 import prisma from "./db";
 import { Resend } from "resend";
 import { recoveryEmailTemplate, magicLinkEmailTemplate } from "./email-templates";
