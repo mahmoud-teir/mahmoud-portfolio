@@ -66,9 +66,18 @@ export default function AdminSidebar({ user }: { user: any }) {
             </AnimatePresence>
 
             <aside className={`
-                w-64 bg-black text-white h-screen fixed left-0 top-0 flex flex-col border-r-4 border-black z-[60] overflow-hidden font-mono text-left transition-transform duration-300
-                ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+                w-64 bg-black text-white h-screen fixed left-0 top-0 flex flex-col border-r-4 border-black z-[60] overflow-hidden font-mono text-left transition-transform duration-300 ease-in-out
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'} 
+                lg:translate-x-0
             `}>
+                {/* Mobile Close Button inside sidebar */}
+                <button 
+                    onClick={() => setIsOpen(false)}
+                    className="lg:hidden absolute top-4 right-4 text-[#adff2f] hover:rotate-90 transition-transform"
+                >
+                    <X size={20} />
+                </button>
+
                 {/* Header / Brand */}
                 <div className="p-8 border-b-4 border-white/10 relative overflow-hidden group">
                     <div className="flex items-center gap-3 relative z-10 font-black">
