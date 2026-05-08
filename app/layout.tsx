@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { CommandPalette } from '@/components/ui/command-palette';
-import { CustomCursor } from '@/components/ui/custom-cursor';
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
@@ -32,7 +31,6 @@ export default function RootLayout({
         {children}
         {modal}
         <CommandPalette />
-        <CustomCursor />
       </body>
     </html>
   );
