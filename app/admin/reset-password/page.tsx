@@ -34,6 +34,13 @@ export default function AdminResetPasswordPage() {
         // Extract token from URL
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
+        const urlError = urlParams.get('error');
+
+        if (urlError) {
+            setError(`Token validation failed: ${urlError}. Please request a new reset link.`)
+            setLoading(false)
+            return
+        }
 
         if (!token) {
             setError('Missing recovery token. Please use the link provided in your email.')
@@ -41,21 +48,27 @@ export default function AdminResetPasswordPage() {
             return
         }
 
+        console.log('[RESET PAGE] Attempting reset with token:', token);
+
         try {
-            const { error: authError } = await authClient.resetPassword({
+            const result = await authClient.resetPassword({
                 newPassword: password,
                 token: token,
             })
 
-            if (authError) {
-                setError(authError.message || 'Failed to reset password. Token may be invalid or expired.')
+            console.log('[RESET PAGE] Full result:', JSON.stringify(result));
+
+            if (result.error) {
+                console.error('[RESET PAGE] Error:', result.error);
+                setError(result.error.message || 'Failed to reset password. Token may be invalid or expired.')
             } else {
                 setSuccess(true)
                 setTimeout(() => {
                     router.push('/admin/login')
                 }, 3000)
             }
-        } catch {
+        } catch (e: any) {
+            console.error('[RESET PAGE] Exception:', e);
             setError('System Error: Recovery Service Unavailable')
         } finally {
             setLoading(false)
