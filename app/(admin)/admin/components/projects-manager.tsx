@@ -3,7 +3,6 @@
 import React, { useState, useTransition, useOptimistic } from 'react'
 import { createProject, updateProject, deleteProject } from '@/app/actions/projects'
 import { Plus, Pencil, Trash2, X, Star, ExternalLink, Github, Image as ImageIcon } from 'lucide-react'
-import { UploadButton } from '@/lib/uploadthing'
 import Image from 'next/image'
 import { BrutalistToast, BrutalistConfirm } from './brutalist-ui'
 import { AnimatePresence } from 'framer-motion'
@@ -238,6 +237,7 @@ function ProjectForm({
                 </button>
             </form>
         </div>
+        </>
     )
 }
 
