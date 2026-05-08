@@ -36,6 +36,7 @@ export default async function ProjectPage({ params }: PageProps) {
                             src={project.image}
                             alt={project.title}
                             fill
+                            sizes="100vw"
                             className="object-cover"
                             priority
                         />
