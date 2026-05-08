@@ -15,6 +15,7 @@ export const CustomCursor = () => {
     const edgeY = useSpring(cursorY, springConfig)
 
     useEffect(() => {
+        setIsVisible(true) // Force visible on mount
         const moveCursor = (e: MouseEvent) => {
             cursorX.set(e.clientX)
             cursorY.set(e.clientY)
@@ -22,34 +23,23 @@ export const CustomCursor = () => {
             const target = e.target as HTMLElement
             setIsPointer(
                 window.getComputedStyle(target).cursor === 'pointer' ||
-                target.tagName === 'A' ||
-                target.tagName === 'BUTTON' ||
+                ['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName) ||
                 target.closest('a') !== null ||
                 target.closest('button') !== null
             )
         }
 
-        const handleMouseEnter = () => setIsVisible(true)
-        const handleMouseLeave = () => setIsVisible(false)
-
         window.addEventListener('mousemove', moveCursor)
-        document.body.addEventListener('mouseenter', handleMouseEnter)
-        document.body.addEventListener('mouseleave', handleMouseLeave)
-
-        return () => {
-            window.removeEventListener('mousemove', moveCursor)
-            document.body.removeEventListener('mouseenter', handleMouseEnter)
-            document.body.removeEventListener('mouseleave', handleMouseLeave)
-        }
+        return () => window.removeEventListener('mousemove', moveCursor)
     }, [cursorX, cursorY])
 
     if (typeof window === 'undefined') return null
 
     return (
-        <div className="fixed inset-0 pointer-events-none z-[9999] mix-blend-difference hidden md:block">
+        <div className="fixed inset-0 pointer-events-none z-[99999]">
             {/* Main Dot */}
             <motion.div
-                className="fixed w-3 h-3 bg-[#adff2f] rounded-full"
+                className="fixed w-4 h-4 bg-black border-2 border-[#adff2f] rounded-full"
                 style={{
                     x: cursorX,
                     y: cursorY,
@@ -61,17 +51,17 @@ export const CustomCursor = () => {
             
             {/* Outline Circle */}
             <motion.div
-                className="fixed w-10 h-10 border-2 border-[#adff2f] rounded-full"
+                className="fixed w-12 h-12 border-2 border-black rounded-full"
                 animate={{
-                    scale: isPointer ? 1.5 : 1,
-                    backgroundColor: isPointer ? 'rgba(173, 255, 47, 0.2)' : 'rgba(173, 255, 47, 0)',
+                    scale: isPointer ? 1.4 : 1,
+                    borderColor: isPointer ? '#adff2f' : '#000000',
                 }}
                 style={{
                     x: edgeX,
                     y: edgeY,
                     translateX: '-50%',
                     translateY: '-50%',
-                    opacity: isVisible ? 0.5 : 0,
+                    opacity: isVisible ? 0.3 : 0,
                 }}
             />
         </div>
