@@ -9,11 +9,16 @@ import { recoveryEmailTemplate, magicLinkEmailTemplate } from "./email-templates
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const auth = betterAuth({
-    baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "https://mahmoud-teir.vercel.app/",
+    baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? "https://mahmoud-teir.vercel.app" : "http://localhost:3000"),
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
-    trustedOrigins: ["http://localhost:3000", "http://127.0.0.1:3000"],
+    trustedOrigins: [
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "https://mahmoud-teir.vercel.app",
+        "https://mahmoud-portfolio-phi.vercel.app"
+    ],
     user: {
         additionalFields: {
             cvUrl: {
