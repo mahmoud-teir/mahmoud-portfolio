@@ -1,9 +1,11 @@
 "use server"
 
 import prisma from "@/lib/db"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
+import { CACHE_TAGS } from "@/lib/queries"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
+import { projectSchema } from "@/lib/validations/project"
 
 // Helper function to check auth
 async function requireAuth() {
@@ -21,41 +23,37 @@ export async function createProject(data: FormData) {
     try {
         await requireAuth()
 
-        const title = data.get("title") as string
-        const description = data.get("description") as string
-        const liveUrl = (data.get("liveUrl") as string) || null
-        const githubUrl = (data.get("githubUrl") as string) || null
-        const image = (data.get("image") as string) || null
         const tagsString = data.get("tags") as string
-        const tags = tagsString ? tagsString.split(",").map(t => t.trim()) : []
-        const featured = data.get("featured") === "true"
+        const parsed = projectSchema.safeParse({
+            title: data.get("title"),
+            description: data.get("description"),
+            liveUrl: data.get("liveUrl") || undefined,
+            githubUrl: data.get("githubUrl") || undefined,
+            image: data.get("image") || undefined,
+            tags: tagsString ? tagsString.split(",").map(t => t.trim()).filter(Boolean) : [],
+            featured: data.get("featured") === "true",
+            order: Number(data.get("order") || 0)
+        })
 
-        if (!title || !description) {
-            throw new Error("Title and description are required")
+        if (!parsed.success) {
+            return { success: false, error: parsed.error.errors[0]?.message || "Validation failed" }
         }
 
         const project = await prisma.project.create({
-            data: {
-                title,
-                description,
-                liveUrl,
-                githubUrl,
-                image,
-                tags,
-                featured,
-            }
+            data: parsed.data
         })
 
         await prisma.securityLog.create({
             data: {
                 event: 'CREATE_PROJECT',
                 level: 'INFO',
-                details: `Project "${title}" created.`,
+                details: `Project "${parsed.data.title}" created.`,
             }
         })
 
         revalidatePath("/projects")
         revalidatePath("/")
+        revalidateTag(CACHE_TAGS.PROJECTS)
         return { success: true, project }
     } catch (error) {
         console.error("Failed to create project:", error)
@@ -67,29 +65,25 @@ export async function updateProject(id: string, data: FormData) {
     try {
         await requireAuth()
 
-        const title = data.get("title") as string
-        const description = data.get("description") as string
-        const liveUrl = (data.get("liveUrl") as string) || null
-        const githubUrl = (data.get("githubUrl") as string) || null
-        const image = (data.get("image") as string) || null
         const tagsString = data.get("tags") as string
-        const tags = tagsString ? tagsString.split(",").map(t => t.trim()) : []
-        const featured = data.get("featured") === "true"
-        const orderString = data.get("order") as string
-        const order = orderString ? parseInt(orderString, 10) : undefined
+        const parsed = projectSchema.safeParse({
+            title: data.get("title"),
+            description: data.get("description"),
+            liveUrl: data.get("liveUrl") || undefined,
+            githubUrl: data.get("githubUrl") || undefined,
+            image: data.get("image") || undefined,
+            tags: tagsString ? tagsString.split(",").map(t => t.trim()).filter(Boolean) : [],
+            featured: data.get("featured") === "true",
+            order: Number(data.get("order") || 0)
+        })
+
+        if (!parsed.success) {
+            return { success: false, error: parsed.error.errors[0]?.message || "Validation failed" }
+        }
 
         const project = await prisma.project.update({
             where: { id },
-            data: {
-                ...(title && { title }),
-                ...(description && { description }),
-                liveUrl,
-                githubUrl,
-                image,
-                ...(tags.length > 0 && { tags }),
-                featured,
-                ...(order !== undefined && { order })
-            }
+            data: parsed.data
         })
 
         await prisma.securityLog.create({
@@ -103,7 +97,7 @@ export async function updateProject(id: string, data: FormData) {
         revalidatePath("/projects")
         revalidatePath("/")
         revalidatePath(`/admin/dashboard`)
-        revalidatePath(`/admin/dashboard`)
+        revalidateTag(CACHE_TAGS.PROJECTS)
         return { success: true, project }
     } catch (error) {
         console.error("Failed to update project:", error)
@@ -130,6 +124,7 @@ export async function deleteProject(id: string) {
         revalidatePath("/projects")
         revalidatePath("/")
         revalidatePath(`/admin/dashboard`)
+        revalidateTag(CACHE_TAGS.PROJECTS)
         return { success: true }
     } catch (error) {
         console.error("Failed to delete project:", error)

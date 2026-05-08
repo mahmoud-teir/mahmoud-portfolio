@@ -111,36 +111,52 @@ function ProjectForm({
                         />
                     </div>
                     <div className="space-y-2">
-                        <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Image URL</label>
-                        <input type="hidden" name="image" value={imageUrl} />
-                        {imageUrl ? (
-                            <div className="relative w-full h-24 border-2 border-black group overflow-hidden">
-                                <Image src={imageUrl} alt="Project visual" fill className="object-cover" />
-                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <button
-                                        type="button"
-                                        onClick={() => setImageUrl('')}
-                                        className="text-[#adff2f] font-mono text-xs uppercase font-bold border-2 border-[#adff2f] px-2 py-1"
-                                    >
-                                        Remove/Change
-                                    </button>
-                                </div>
-                            </div>
-                        ) : (
-                            <UploadButton
-                                endpoint="imageUploader"
-                                onClientUploadComplete={(res) => {
-                                    if (res && res[0]) {
-                                        setImageUrl(res[0].url)
-                                    }
-                                }}
-                                onUploadError={(error: Error) => {
-                                    showToast(`UPLOAD_FAILED: ${error.message.toUpperCase()}`, 'error')
-                                }}
-                                className="ut-button:w-full ut-button:py-3 ut-button:bg-brutal-bg ut-button:text-black ut-button:border-2 ut-button:border-black ut-button:font-mono ut-button:text-xs ut-button:uppercase ut-button:shadow-none ut-button:hover:bg-neon ut-button:transition-colors ut-allowed-content:hidden"
-                                content={{ button: "UPLOAD_IMAGE" }}
+                        <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Project Image (URL or Upload)</label>
+                        <div className="flex flex-col gap-3">
+                            <input
+                                name="image"
+                                value={imageUrl}
+                                onChange={(e) => setImageUrl(e.target.value)}
+                                placeholder="https://external-image.com/pic.jpg"
+                                className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
                             />
-                        )}
+                            
+                            {imageUrl ? (
+                                <div className="relative w-full h-32 border-2 border-black group overflow-hidden bg-gray-50">
+                                    <Image src={imageUrl} alt="Project visual preview" fill className="object-cover" />
+                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <button
+                                            type="button"
+                                            onClick={() => setImageUrl('')}
+                                            className="bg-[#adff2f] text-black font-mono text-[10px] uppercase font-bold border-2 border-black px-3 py-1 brutal-shadow"
+                                        >
+                                            Remove_Image
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="border-2 border-dashed border-black p-4 flex flex-col items-center justify-center bg-gray-50">
+                                    <ImageIcon size={24} className="mb-2 opacity-20" />
+                                    <p className="font-mono text-[9px] uppercase font-bold opacity-40 mb-4 text-center">
+                                        Paste a URL above or upload a local file below
+                                    </p>
+                                    <UploadButton
+                                        endpoint="imageUploader"
+                                        onClientUploadComplete={(res) => {
+                                            if (res && res[0]) {
+                                                setImageUrl(res[0].url)
+                                                showToast('IMAGE_UPLOADED', 'success')
+                                            }
+                                        }}
+                                        onUploadError={(error: Error) => {
+                                            showToast(`UPLOAD_FAILED: ${error.message.toUpperCase()}`, 'error')
+                                        }}
+                                        className="ut-button:w-full ut-button:py-3 ut-button:bg-black ut-button:text-white ut-button:border-2 ut-button:border-black ut-button:font-mono ut-button:text-[10px] ut-button:uppercase ut-button:shadow-none ut-button:hover:bg-neon ut-button:hover:text-black ut-button:transition-colors ut-allowed-content:hidden"
+                                        content={{ button: "SELECT_LOCAL_FILE" }}
+                                    />
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
 

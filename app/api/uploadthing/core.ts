@@ -9,9 +9,9 @@ const f = createUploadthing();
 export const ourFileRouter = {
     // CV uploader: accepts PDF and common document formats
     cvUploader: f({
-        "application/pdf": { maxFileSize: "128MB", maxFileCount: 1 },
-        "application/msword": { maxFileSize: "128MB", maxFileCount: 1 },
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": { maxFileSize: "128MB", maxFileCount: 1 },
+        "application/pdf": { maxFileSize: "8MB", maxFileCount: 1 },
+        "application/msword": { maxFileSize: "8MB", maxFileCount: 1 },
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document": { maxFileSize: "8MB", maxFileCount: 1 },
     })
         .middleware(async ({ req }) => {
             // This code runs on your server before upload
@@ -32,14 +32,10 @@ export const ourFileRouter = {
             return { userId: session.user.id };
         })
         .onUploadComplete(async ({ metadata, file }) => {
-            // This code RUNS ON YOUR SERVER after upload
-            console.log("CV Upload complete for userId:", metadata.userId);
-            console.log("file url:", file.url);
-
             // Update User profile CV record
             await prisma.user.update({
                 where: { id: metadata.userId },
-                data: { cvUrl: file.url } as any
+                data: { cvUrl: file.url }
             });
 
             // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
@@ -66,10 +62,6 @@ export const ourFileRouter = {
             return { userId: session.user.id };
         })
         .onUploadComplete(async ({ metadata, file }) => {
-            // This code RUNS ON YOUR SERVER after upload
-            console.log("Image Upload complete for userId:", metadata.userId);
-            console.log("file url:", file.url);
-
             // Update User profile image record
             await prisma.user.update({
                 where: { id: metadata.userId },

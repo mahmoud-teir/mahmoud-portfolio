@@ -5,6 +5,7 @@ import { revalidatePath, revalidateTag } from "next/cache"
 import { CACHE_TAGS } from "@/lib/queries"
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
+import { experienceSchema } from "@/lib/validations/experience"
 
 async function requireAuth() {
     const session = await auth.api.getSession({ headers: await headers() })
@@ -20,32 +21,27 @@ export async function createExperience(data: FormData) {
     try {
         await requireAuth()
 
-        const company = data.get("company") as string
-        const role = data.get("role") as string
-        const startDate = data.get("startDate") as string
-        const endDate = data.get("endDate") as string | null
-        const current = data.get("current") === "true"
-        const description = (data.get("description") as string) || ""
-        const order = Number(data.get("order") || 0)
+        const parsed = experienceSchema.safeParse({
+            company: data.get("company"),
+            role: data.get("role"),
+            startDate: data.get("startDate"),
+            endDate: data.get("endDate") || null,
+            current: data.get("current") === "true",
+            description: data.get("description") || "",
+            order: Number(data.get("order") || 0)
+        })
 
-        if (!company || !role || !startDate) {
-            return { success: false, error: "Company, role, and start date are required" }
+        if (!parsed.success) {
+            return { success: false, error: parsed.error.errors[0]?.message || "Validation failed" }
         }
 
         const experience = await prisma.experience.create({
-            data: {
-                company,
-                role,
-                startDate: new Date(startDate),
-                endDate: endDate ? new Date(endDate) : null,
-                current,
-                description,
-                order,
-            },
+            data: parsed.data,
         })
 
         revalidatePath("/admin/experience")
         revalidatePath("/")
+        revalidateTag(CACHE_TAGS.EXPERIENCES)
         return { success: true, experience }
     } catch (error) {
         console.error("Failed to create experience:", error)
@@ -57,29 +53,28 @@ export async function updateExperience(id: string, data: FormData) {
     try {
         await requireAuth()
 
-        const company = data.get("company") as string
-        const role = data.get("role") as string
-        const startDate = data.get("startDate") as string
-        const endDate = data.get("endDate") as string | null
-        const current = data.get("current") === "true"
-        const description = (data.get("description") as string) || ""
-        const order = Number(data.get("order") || 0)
+        const parsed = experienceSchema.safeParse({
+            company: data.get("company"),
+            role: data.get("role"),
+            startDate: data.get("startDate"),
+            endDate: data.get("endDate") || null,
+            current: data.get("current") === "true",
+            description: data.get("description") || "",
+            order: Number(data.get("order") || 0)
+        })
+
+        if (!parsed.success) {
+            return { success: false, error: parsed.error.errors[0]?.message || "Validation failed" }
+        }
 
         const experience = await prisma.experience.update({
             where: { id },
-            data: {
-                ...(company && { company }),
-                ...(role && { role }),
-                ...(startDate && { startDate: new Date(startDate) }),
-                endDate: endDate ? new Date(endDate) : null,
-                current,
-                description,
-                order,
-            },
+            data: parsed.data,
         })
 
         revalidatePath("/admin/experience")
         revalidatePath("/")
+        revalidateTag(CACHE_TAGS.EXPERIENCES)
         return { success: true, experience }
     } catch (error) {
         console.error("Failed to update experience:", error)
@@ -93,6 +88,7 @@ export async function deleteExperience(id: string) {
         await prisma.experience.delete({ where: { id } })
         revalidatePath("/admin/experience")
         revalidatePath("/")
+        revalidateTag(CACHE_TAGS.EXPERIENCES)
         return { success: true }
     } catch (error) {
         console.error("Failed to delete experience:", error)

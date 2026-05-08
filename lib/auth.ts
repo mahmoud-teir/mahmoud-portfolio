@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { magicLink } from "better-auth/plugins";
+import { magicLink, twoFactor, passkey } from "better-auth/plugins";
 import prisma from "./db";
 import { Resend } from "resend";
 import { recoveryEmailTemplate, magicLinkEmailTemplate } from "./email-templates";
@@ -35,12 +35,11 @@ export const auth = betterAuth({
 
             try {
                 await resend.emails.send({
-                    from: "onboarding@resend.dev", // Update this to your verified domain (e.g., admin@mahmoud.dev)
+                    from: "hello@mahmoud.dev",
                     to: user.email,
                     subject: "MAHMOUD.DEV // Password Reset Protocol",
                     html: recoveryEmailTemplate(url),
                 });
-                console.log(`Recovery email successfully sent to ${user.email} via Resend.`);
             } catch (error) {
                 console.error("Failed to send recovery email via Resend:", error);
             }
@@ -86,16 +85,17 @@ export const auth = betterAuth({
 
                 try {
                     await resend.emails.send({
-                        from: "onboarding@resend.dev", // Update to verified domain in production
+                        from: "hello@mahmoud.dev",
                         to: email,
                         subject: "MAHMOUD.DEV // Magic Link Login",
                         html: magicLinkEmailTemplate(url),
                     });
-                    console.log(`Magic link email successfully sent to \${email} via Resend.`);
                 } catch (error) {
                     console.error("Failed to send magic link email via Resend:", error);
                 }
             },
         }),
+        twoFactor(),
+        passkey(),
     ],
 });

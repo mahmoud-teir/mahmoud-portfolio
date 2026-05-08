@@ -357,7 +357,7 @@ export default function AdminProfilePage() {
                                             value={formData.username}
                                             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
                                             className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
-                                            placeholder="ENTER_USERNAME"
+                                            placeholder={session?.user?.name || "Enter username"}
                                         />
                                     </div>
                                     <div className="space-y-3">
@@ -367,7 +367,7 @@ export default function AdminProfilePage() {
                                             value={formData.email}
                                             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                             className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono text-sm md:text-base"
-                                            placeholder="EMAIL@DOMAIN.COM"
+                                            placeholder={session?.user?.email || "admin@example.com"}
                                         />
                                     </div>
                                 </div>
@@ -412,7 +412,7 @@ export default function AdminProfilePage() {
                                         value={formData.bio}
                                         onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                                         className="w-full px-4 py-3 md:px-6 md:py-4 border-4 border-black bg-white focus:bg-[#adff2f] outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] focus:shadow-none transition-all font-bold placeholder:text-gray-400 font-mono resize-none text-sm md:text-base"
-                                        placeholder="TELL_US_ABOUT_YOU..."
+                                        placeholder={(session?.user as any)?.bio || "Tell us about yourself..."}
                                     />
                                 </div>
 

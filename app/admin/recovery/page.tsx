@@ -148,7 +148,7 @@ export default function AdminRecoveryPage() {
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="USER@NETWORK.LOCAL"
+                                    placeholder="user@example.com"
                                     required
                                     className="w-full h-24 px-8 border-4 border-black text-2xl font-extrabold uppercase focus:bg-[#adff2f] outline-none transition-all placeholder:text-gray-300"
                                 />

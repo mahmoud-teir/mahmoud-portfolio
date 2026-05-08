@@ -31,9 +31,20 @@ export default function AdminResetPasswordPage() {
 
         setLoading(true)
 
+        // Extract token from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (!token) {
+            setError('Missing recovery token. Please use the link provided in your email.')
+            setLoading(false)
+            return
+        }
+
         try {
             const { error: authError } = await authClient.resetPassword({
                 newPassword: password,
+                token: token,
             })
 
             if (authError) {

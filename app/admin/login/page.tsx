@@ -163,7 +163,7 @@ export default function AdminLoginPage() {
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="ADMIN@NETWORK.SYS"
+                                    placeholder="admin@example.com"
                                     required
                                     className="w-full h-16 md:h-20 pl-12 md:pl-16 pr-4 md:pr-8 border-4 border-black text-lg md:text-xl font-extrabold uppercase focus:bg-[#adff2f] outline-none transition-all placeholder:text-gray-300"
                                 />
