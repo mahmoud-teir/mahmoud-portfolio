@@ -43,6 +43,7 @@ export async function updateAdminProfile(data: { name: string, email: string, bi
 
         revalidatePath("/admin/profile")
         revalidateTag(CACHE_TAGS.USER)
+        revalidatePath("/", "layout")
         return { success: true }
     } catch (error) {
         console.error("Profile update error:", error)
