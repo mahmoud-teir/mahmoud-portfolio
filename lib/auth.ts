@@ -36,7 +36,7 @@ export const auth = betterAuth({
 
             try {
                 await resend.emails.send({
-                    from: "hello@mahmoud.dev",
+                    from: "onboarding@resend.dev",
                     to: user.email,
                     subject: "MAHMOUD.DEV // Password Reset Protocol",
                     html: recoveryEmailTemplate(url),
@@ -86,7 +86,7 @@ export const auth = betterAuth({
 
                 try {
                     await resend.emails.send({
-                        from: "hello@mahmoud.dev",
+                        from: "onboarding@resend.dev",
                         to: email,
                         subject: "MAHMOUD.DEV // Magic Link Login",
                         html: magicLinkEmailTemplate(url),
