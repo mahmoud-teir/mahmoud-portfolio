@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { JetBrains_Mono } from 'next/font/google';
 import './globals.css';
-import '@uploadthing/react/styles.css';
 import { CommandPalette } from '@/components/ui/command-palette';
 
 const jetbrainsMono = JetBrains_Mono({
