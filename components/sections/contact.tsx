@@ -53,8 +53,11 @@ export const Contact = ({ contactText, displayEmail }: { contactText?: string, d
                         </p>
                     )}
                     {displayEmail && (
-                        <div className="mt-6">
-                            <a href={`mailto:${displayEmail}`} className="inline-block text-xl md:text-3xl font-black bg-neon px-6 md:px-8 py-3 border-4 border-black hover:bg-black hover:text-[#adff2f] transition-colors uppercase neo-shadow-sm hover:translate-y-1 hover:shadow-none break-all">
+                        <div className="mt-6 px-2">
+                            <a 
+                                href={`mailto:${displayEmail}`} 
+                                className="inline-block w-full sm:w-auto text-sm xs:text-base sm:text-xl md:text-3xl font-black bg-neon px-4 sm:px-8 py-3 border-4 border-black hover:bg-black hover:text-[#adff2f] transition-colors uppercase neo-shadow-sm hover:translate-y-1 hover:shadow-none break-words overflow-hidden"
+                            >
                                 {displayEmail}
                             </a>
                         </div>
