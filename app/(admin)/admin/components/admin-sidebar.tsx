@@ -65,13 +65,9 @@ export default function AdminSidebar({ user }: { user: any }) {
                 )}
             </AnimatePresence>
 
-            <motion.aside
-                initial={false}
-                animate={{ x: isOpen ? 0 : '-100%' }}
-                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className={`
-                    w-64 bg-black text-white h-screen fixed left-0 top-0 flex flex-col border-r-4 border-black z-[60] overflow-hidden font-mono text-left lg:!translate-x-0
-                `}
+            <aside
+                className="w-64 bg-black text-white h-screen fixed left-0 top-0 flex flex-col border-r-4 border-black z-[60] overflow-hidden font-mono text-left"
+                data-sidebar-open={isOpen}
             >
                 {/* Header / Brand */}
                 <div className="p-8 border-b-4 border-white/10 relative overflow-hidden group">
@@ -150,7 +146,7 @@ export default function AdminSidebar({ user }: { user: any }) {
                         Build: 1.0.6 // OS: PORTFOLIO_CMD
                     </div>
                 </div>
-            </motion.aside>
+            </aside>
         </>
     )
 }
