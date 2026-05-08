@@ -2,6 +2,8 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/db";
+import { revalidateTag } from "next/cache";
+import { CACHE_TAGS } from "@/lib/queries";
 
 const f = createUploadthing();
 
@@ -37,6 +39,7 @@ export const ourFileRouter = {
                 where: { id: metadata.userId },
                 data: { cvUrl: file.url }
             });
+            revalidateTag(CACHE_TAGS.USER);
 
             // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
             return { uploadedBy: metadata.userId, url: file.url };
@@ -67,6 +70,7 @@ export const ourFileRouter = {
                 where: { id: metadata.userId },
                 data: { image: file.url }
             });
+            revalidateTag(CACHE_TAGS.USER);
 
             // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
             return { uploadedBy: metadata.userId, url: file.url };
