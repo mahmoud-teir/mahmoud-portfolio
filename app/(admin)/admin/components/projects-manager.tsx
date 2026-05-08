@@ -20,6 +20,9 @@ interface Project {
     order: number
 }
 
+import { ImageCropper } from './image-cropper'
+import { uploadFiles } from '@/lib/uploadthing'
+
 function ProjectForm({
     project,
     onClose,
@@ -31,7 +34,39 @@ function ProjectForm({
 }) {
     const [isPending, startTransition] = useTransition()
     const [imageUrl, setImageUrl] = useState(project?.image || '')
+    const [croppingImage, setCroppingImage] = useState<string | null>(null)
+    const [isUploading, setIsUploading] = useState(false)
     const isEditing = !!project
+
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = () => {
+                setCroppingImage(reader.result as string)
+            }
+            reader.readAsDataURL(file)
+        }
+    }
+
+    const onCropComplete = async (blob: Blob) => {
+        setCroppingImage(null)
+        setIsUploading(true)
+        try {
+            const file = new File([blob], 'cropped-project-image.jpg', { type: 'image/jpeg' })
+            const [res] = await uploadFiles('imageUploader', {
+                files: [file],
+            })
+            if (res) {
+                setImageUrl(res.url)
+                showToast('IMAGE_UPLOADED', 'success')
+            }
+        } catch (error: any) {
+            showToast(`UPLOAD_FAILED: ${error.message.toUpperCase()}`, 'error')
+        } finally {
+            setIsUploading(false)
+        }
+    }
 
     const handleSubmit = (formData: FormData) => {
         startTransition(async () => {
@@ -51,114 +86,126 @@ function ProjectForm({
     }
 
     return (
-        <div className="bg-white border-2 border-black brutal-shadow p-6 md:p-8 mb-6">
-            <div className="flex items-center justify-between mb-4 md:mb-6">
-                <h3 className="text-lg md:text-xl font-display uppercase tracking-tighter">
-                    {isEditing ? 'Edit_Project' : 'New_Project'}
-                </h3>
-                <button onClick={onClose} className="hover:text-brutal-pink transition-colors">
-                    <X size={20} />
-                </button>
-            </div>
-
-            <form action={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Title</label>
-                        <input
-                            name="title"
-                            defaultValue={project?.title}
-                            required
-                            className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Tags (comma separated)</label>
-                        <input
-                            name="tags"
-                            defaultValue={project?.tags.join(', ')}
-                            className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
-                        />
-                    </div>
+        <>
+            {croppingImage && (
+                <ImageCropper 
+                    image={croppingImage} 
+                    onCancel={() => setCroppingImage(null)}
+                    onCropComplete={onCropComplete}
+                />
+            )}
+            <div className="bg-white border-2 border-black brutal-shadow p-6 md:p-8 mb-6">
+                <div className="flex items-center justify-between mb-4 md:mb-6">
+                    <h3 className="text-lg md:text-xl font-display uppercase tracking-tighter">
+                        {isEditing ? 'Edit_Project' : 'New_Project'}
+                    </h3>
+                    <button onClick={onClose} className="hover:text-brutal-pink transition-colors">
+                        <X size={20} />
+                    </button>
                 </div>
 
-                <div className="space-y-2">
-                    <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Description</label>
-                    <textarea
-                        name="description"
-                        defaultValue={project?.description}
-                        required
-                        rows={3}
-                        className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors resize-none"
-                    />
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-2">
-                        <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Live URL</label>
-                        <input
-                            name="liveUrl"
-                            defaultValue={project?.liveUrl || ''}
-                            className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="font-mono text-[10px] uppercase font-bold tracking-widest">GitHub URL</label>
-                        <input
-                            name="githubUrl"
-                            defaultValue={project?.githubUrl || ''}
-                            className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Project Image (URL or Upload)</label>
-                        <div className="flex flex-col gap-3">
+                <form action={handleSubmit} className="space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                            <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Title</label>
                             <input
-                                name="image"
-                                value={imageUrl}
-                                onChange={(e) => setImageUrl(e.target.value)}
-                                placeholder="https://external-image.com/pic.jpg"
+                                name="title"
+                                defaultValue={project?.title}
+                                required
                                 className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
                             />
-                            
-                            {imageUrl ? (
-                                <div className="relative w-full h-32 border-2 border-black group overflow-hidden bg-gray-50">
-                                    <Image src={imageUrl} alt="Project visual preview" fill className="object-cover" />
-                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                        <button
-                                            type="button"
-                                            onClick={() => setImageUrl('')}
-                                            className="bg-[#adff2f] text-black font-mono text-[10px] uppercase font-bold border-2 border-black px-3 py-1 brutal-shadow"
-                                        >
-                                            Remove_Image
-                                        </button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <div className="border-2 border-dashed border-black p-4 flex flex-col items-center justify-center bg-gray-50">
-                                    <ImageIcon size={24} className="mb-2 opacity-20" />
-                                    <p className="font-mono text-[9px] uppercase font-bold opacity-40 mb-4 text-center">
-                                        Paste a URL above or upload a local file below
-                                    </p>
-                                    <UploadButton
-                                        endpoint="imageUploader"
-                                        onClientUploadComplete={(res) => {
-                                            if (res && res[0]) {
-                                                setImageUrl(res[0].url)
-                                                showToast('IMAGE_UPLOADED', 'success')
-                                            }
-                                        }}
-                                        onUploadError={(error: Error) => {
-                                            showToast(`UPLOAD_FAILED: ${error.message.toUpperCase()}`, 'error')
-                                        }}
-                                        className="ut-button:w-full ut-button:py-3 ut-button:bg-black ut-button:text-white ut-button:border-2 ut-button:border-black ut-button:font-mono ut-button:text-[10px] ut-button:uppercase ut-button:shadow-none ut-button:hover:bg-neon ut-button:hover:text-black ut-button:transition-colors ut-allowed-content:hidden"
-                                        content={{ button: "SELECT_LOCAL_FILE" }}
-                                    />
-                                </div>
-                            )}
+                        </div>
+                        <div className="space-y-2">
+                            <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Tags (comma separated)</label>
+                            <input
+                                name="tags"
+                                defaultValue={project?.tags.join(', ')}
+                                className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
+                            />
                         </div>
                     </div>
-                </div>
+
+                    <div className="space-y-2">
+                        <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Description</label>
+                        <textarea
+                            name="description"
+                            defaultValue={project?.description}
+                            required
+                            rows={3}
+                            className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors resize-none"
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="space-y-2">
+                            <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Live URL</label>
+                            <input
+                                name="liveUrl"
+                                defaultValue={project?.liveUrl || ''}
+                                className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="font-mono text-[10px] uppercase font-bold tracking-widest">GitHub URL</label>
+                            <input
+                                name="githubUrl"
+                                defaultValue={project?.githubUrl || ''}
+                                className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <label className="font-mono text-[10px] uppercase font-bold tracking-widest">Project Image (URL or Upload)</label>
+                            <div className="flex flex-col gap-3">
+                                <input
+                                    name="image"
+                                    value={imageUrl}
+                                    onChange={(e) => setImageUrl(e.target.value)}
+                                    placeholder="https://external-image.com/pic.jpg"
+                                    className="w-full bg-brutal-bg border-2 border-black p-3 font-mono text-sm focus:bg-neon outline-none transition-colors"
+                                />
+                                
+                                {imageUrl ? (
+                                    <div className="relative w-full h-32 border-2 border-black group overflow-hidden bg-gray-50">
+                                        <Image src={imageUrl} alt="Project visual preview" fill className="object-cover" />
+                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                            <button
+                                                type="button"
+                                                onClick={() => setImageUrl('')}
+                                                className="bg-[#adff2f] text-black font-mono text-[10px] uppercase font-bold border-2 border-black px-3 py-1 brutal-shadow"
+                                            >
+                                                Remove_Image
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="border-2 border-dashed border-black p-4 flex flex-col items-center justify-center bg-gray-50 relative min-h-[140px]">
+                                        {isUploading ? (
+                                            <div className="flex flex-col items-center gap-2">
+                                                <div className="w-8 h-8 border-4 border-black border-t-[#adff2f] animate-spin"></div>
+                                                <p className="font-mono text-[10px] uppercase font-bold">Uploading...</p>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <ImageIcon size={24} className="mb-2 opacity-20" />
+                                                <p className="font-mono text-[9px] uppercase font-bold opacity-40 mb-4 text-center">
+                                                    Paste a URL above or upload a local file below
+                                                </p>
+                                                <label className="cursor-pointer bg-black text-white px-6 py-2 font-mono text-[10px] uppercase font-bold hover:bg-[#adff2f] hover:text-black transition-colors border-2 border-black">
+                                                    SELECT_LOCAL_FILE
+                                                    <input 
+                                                        type="file" 
+                                                        className="hidden" 
+                                                        accept="image/*"
+                                                        onChange={handleFileSelect}
+                                                    />
+                                                </label>
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
 
                 <div className="flex items-center gap-4">
                     <label className="flex items-center gap-2 font-mono text-xs uppercase cursor-pointer">
