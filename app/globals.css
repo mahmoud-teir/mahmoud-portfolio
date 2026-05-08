@@ -22,11 +22,12 @@
     background-image: radial-gradient(#000 0.5px, transparent 0.5px);
     background-size: 24px 24px;
     -webkit-font-smoothing: antialiased;
-    cursor: crosshair;
   }
 
-  a, button, [role="button"] {
-    cursor: cell;
+  @media (min-width: 768px) {
+    * {
+      cursor: none !important;
+    }
   }
 
   /* Custom Scrollbar - Brutalist Style */
