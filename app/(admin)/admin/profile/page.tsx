@@ -21,7 +21,7 @@ import Image from 'next/image'
 import { authClient } from '@/lib/auth-client'
 import { UploadButton, UploadDropzone, useUploadThing } from '@/lib/uploadthing'
 import { useRouter } from 'next/navigation'
-import { updateAdminProfile, getProfileStats } from '@/app/actions/profile'
+import { updateAdminProfile, getProfileStats, revalidateUserCache } from '@/app/actions/profile'
 
 export default function AdminProfilePage() {
     const router = useRouter()
@@ -44,6 +44,7 @@ export default function AdminProfilePage() {
         onClientUploadComplete: async (res) => {
             if (res && res[0]) {
                 await authClient.updateUser({ image: res[0].url })
+                await revalidateUserCache()
                 showToast('AVATAR_UPLOADED_SUCCESSFULLY', 'success')
                 setTimeout(() => window.location.reload(), 1500)
             }
@@ -62,6 +63,7 @@ export default function AdminProfilePage() {
             if (res && res[0]) {
                 const originalName = pendingCvFileName || res[0].name
                 await authClient.updateUser({ cvUrl: res[0].url, cvName: originalName } as any)
+                await revalidateUserCache()
                 setPendingCvFileName(null)
                 showToast('RESUME_UPLOADED_SUCCESSFULLY!', 'success')
                 setTimeout(() => window.location.reload(), 1500)

@@ -23,7 +23,6 @@ export const Bio = ({ bio, image, aboutSkills, bioHeadline, bioEst }: { bio?: st
                                 src={image || "https://lh3.googleusercontent.com/aida-public/AB6AXuCN0-WWY0WN4jlxRmaYJFQukBBdesaswAi6-nMql4-nV6KYveZUcP5F0Qehj55N1UcBqOgD_IuCVTNA_-SR4-yqcIeSKpPmRyfLTyGPjCLI5_LDeJ-gpkJWanDenTrmthRgql3keV8sVUvB4Lq7xhMb16Bx96czZc2VJZ1oDmFcInO58suY3vsDGMZgcNtyNdjfdWZiHAfNki3bAfCVScOZwYt3P_wVI3Ji1KrxKlpf-1DUlx4uIZEwLKa3j8ZWnghG8cKNgjJK4Mlu"}
                                 alt="Mahmoud"
                                 fill
-                                sizes="(max-width: 768px) 100vw, 50vw"
                                 className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                                 referrerPolicy="no-referrer"
                             />

@@ -34,7 +34,6 @@ export const Projects = ({ projects }: { projects: any[] }) => {
                                             src={project.image}
                                             alt={project.title}
                                             fill
-                                            sizes="(max-width: 1024px) 100vw, 60vw"
                                             className="w-full h-full object-cover grayscale group-hover/img:grayscale-0 transition-all duration-500 scale-105 group-hover/img:scale-100"
                                             referrerPolicy="no-referrer"
                                         />
