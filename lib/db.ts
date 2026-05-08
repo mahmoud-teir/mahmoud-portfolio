@@ -1,13 +1,11 @@
 import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
-import { PrismaNeonHttp } from '@prisma/adapter-neon'
-import { neonConfig } from '@neondatabase/serverless'
+import { PrismaNeon } from '@prisma/adapter-neon'
+import { Pool, neonConfig } from '@neondatabase/serverless'
+import ws from 'ws'
 
-// Use a custom fetch function to bypass Next.js 15+ aggressive fetch caching/interception
-// which can cause "TypeError: fetch failed" with Neon HTTP
-if (globalThis.fetch) {
-    neonConfig.fetchFunction = globalThis.fetch;
-}
+// Enable WebSocket support for serverless environments (needed for transactions)
+neonConfig.webSocketConstructor = ws;
 
 const prismaClientSingleton = () => {
     const connectionString = process.env.DATABASE_URL || ""
@@ -16,8 +14,9 @@ const prismaClientSingleton = () => {
         console.warn("DATABASE_URL is not set!")
     }
 
-    console.log("Prisma initialized with Neon HTTP transport.")
-    const adapter = new PrismaNeonHttp(connectionString, {})
+    console.log("Prisma initialized with Neon WebSocket transport (transactions supported).")
+    const pool = new Pool({ connectionString })
+    const adapter = new PrismaNeon(pool)
     return new PrismaClient({ adapter })
 }
 
@@ -30,3 +29,4 @@ const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
 export default prisma
 
 if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+
