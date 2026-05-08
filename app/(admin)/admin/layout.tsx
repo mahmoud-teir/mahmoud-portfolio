@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth"
 import { headers } from "next/headers"
+import "@uploadthing/react/styles.css"
 import { redirect } from "next/navigation"
 import AdminSidebar from "./components/admin-sidebar"
 
