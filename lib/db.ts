@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { PrismaClient } from '@prisma/client'
 import { PrismaNeon } from '@prisma/adapter-neon'
-import { Pool, neonConfig } from '@neondatabase/serverless'
+import { neonConfig } from '@neondatabase/serverless'
 import ws from 'ws'
 
 // Enable WebSocket support for serverless environments (needed for transactions)
@@ -15,8 +15,7 @@ const prismaClientSingleton = () => {
     }
 
     console.log("Prisma initialized with Neon WebSocket transport (transactions supported).")
-    const pool = new Pool({ connectionString })
-    const adapter = new PrismaNeon(pool)
+    const adapter = new PrismaNeon({ connectionString })
     return new PrismaClient({ adapter })
 }
 
@@ -29,4 +28,5 @@ const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
 export default prisma
 
 if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+
 
