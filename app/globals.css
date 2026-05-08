@@ -22,12 +22,11 @@
     background-image: radial-gradient(#000 0.5px, transparent 0.5px);
     background-size: 24px 24px;
     -webkit-font-smoothing: antialiased;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='black' stroke='white' stroke-width='1.5'%3E%3Cpath d='M5.5 3.21V20.8c0 .45.54.67.85.35l4.83-4.83 2.3 5.17c.14.33.52.48.84.34l2.21-.92c.32-.13.47-.51.34-.83l-2.3-5.17 6.01.01c.31 0 .47-.38.25-.6L6.14 2.86c-.22-.22-.64-.06-.64.35z'/%3E%3C/svg%3E"), auto;
   }
 
-  @media (min-width: 768px) {
-    * {
-      cursor: none !important;
-    }
+  a, button, [role="button"], input[type="submit"], input[type="button"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%23adff2f' stroke-width='3' stroke-linecap='square'%3E%3Cline x1='12' y1='5' x2='12' y2='19'/%3E%3Cline x1='5' y1='12' x2='19' y2='12'/%3E%3C/svg%3E") 12 12, pointer;
   }
 
   /* Custom Scrollbar - Brutalist Style */
