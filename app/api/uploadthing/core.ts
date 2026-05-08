@@ -42,30 +42,60 @@ export const ourFileRouter = {
             return { uploadedBy: metadata.userId, url: file.url };
         }),
 
-    // Profile Image Uploader: updates the user's avatar
     imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
         .middleware(async ({ req }) => {
-            let session = await auth.api.getSession({ headers: req.headers });
+            // This code runs on your server before upload
+            let session;
+            try {
+                session = await auth.api.getSession({
+                    headers: req.headers
+                });
+            } catch (e) {
+                console.warn("UploadThing image session error:", e);
+                throw new UploadThingError("Authentication failed. Please log in again.");
+            }
+
+            // If you throw, the user will not be able to upload
             if (!session?.user) throw new UploadThingError("Unauthorized");
+
+            // Whatever is returned here is accessible in onUploadComplete as `metadata`
             return { userId: session.user.id };
         })
         .onUploadComplete(async ({ metadata, file }) => {
+            // Update User profile image record
             await prisma.user.update({
                 where: { id: metadata.userId },
                 data: { image: file.url }
             });
+
+            // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
             return { uploadedBy: metadata.userId, url: file.url };
         }),
 
-    // Project Image Uploader: for project showcases, does NOT update user profile
     projectImageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
         .middleware(async ({ req }) => {
-            let session = await auth.api.getSession({ headers: req.headers });
+            // This code runs on your server before upload
+            let session;
+            try {
+                session = await auth.api.getSession({
+                    headers: req.headers
+                });
+            } catch (e) {
+                console.warn("UploadThing project image session error:", e);
+                throw new UploadThingError("Authentication failed. Please log in again.");
+            }
+
+            // If you throw, the user will not be able to upload
             if (!session?.user) throw new UploadThingError("Unauthorized");
+
+            // Whatever is returned here is accessible in onUploadComplete as `metadata`
             return { userId: session.user.id };
         })
         .onUploadComplete(async ({ metadata, file }) => {
-            // Just return the URL, don't update user table
+            // Do NOT update the user profile image here
+            // This is strictly for project images
+            
+            // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
             return { uploadedBy: metadata.userId, url: file.url };
         }),
 } satisfies FileRouter;

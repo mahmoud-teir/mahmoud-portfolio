@@ -21,7 +21,7 @@ import Image from 'next/image'
 import { authClient } from '@/lib/auth-client'
 import { UploadButton, UploadDropzone, useUploadThing } from '@/lib/uploadthing'
 import { useRouter } from 'next/navigation'
-import { updateAdminProfile, getProfileStats, updateAdminAvatar } from '@/app/actions/profile'
+import { updateAdminProfile, getProfileStats } from '@/app/actions/profile'
 
 export default function AdminProfilePage() {
     const router = useRouter()
@@ -43,13 +43,9 @@ export default function AdminProfilePage() {
     const { startUpload, isUploading } = useUploadThing("imageUploader", {
         onClientUploadComplete: async (res) => {
             if (res && res[0]) {
-                const result = await updateAdminAvatar(res[0].url)
-                if (result.success) {
-                    showToast('AVATAR_UPLOADED_SUCCESSFULLY', 'success')
-                    setTimeout(() => window.location.reload(), 1500)
-                } else {
-                    showToast('FAILED_TO_SYNC_IMAGE_TO_DATABASE', 'error')
-                }
+                await authClient.updateUser({ image: res[0].url })
+                showToast('AVATAR_UPLOADED_SUCCESSFULLY', 'success')
+                setTimeout(() => window.location.reload(), 1500)
             }
         },
         onUploadError: (error: Error) => {
