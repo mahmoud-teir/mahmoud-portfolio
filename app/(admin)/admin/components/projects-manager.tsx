@@ -53,7 +53,7 @@ function ProjectForm({
         setIsUploading(true)
         try {
             const file = new File([blob], 'cropped-project-image.jpg', { type: 'image/jpeg' })
-            const [res] = await uploadFiles('imageUploader', {
+            const [res] = await uploadFiles('projectImageUploader', {
                 files: [file],
             })
             if (res) {

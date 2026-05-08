@@ -42,33 +42,30 @@ export const ourFileRouter = {
             return { uploadedBy: metadata.userId, url: file.url };
         }),
 
+    // Profile Image Uploader: updates the user's avatar
     imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
         .middleware(async ({ req }) => {
-            // This code runs on your server before upload
-            let session;
-            try {
-                session = await auth.api.getSession({
-                    headers: req.headers
-                });
-            } catch (e) {
-                console.warn("UploadThing image session error:", e);
-                throw new UploadThingError("Authentication failed. Please log in again.");
-            }
-
-            // If you throw, the user will not be able to upload
+            let session = await auth.api.getSession({ headers: req.headers });
             if (!session?.user) throw new UploadThingError("Unauthorized");
-
-            // Whatever is returned here is accessible in onUploadComplete as `metadata`
             return { userId: session.user.id };
         })
         .onUploadComplete(async ({ metadata, file }) => {
-            // Update User profile image record
             await prisma.user.update({
                 where: { id: metadata.userId },
                 data: { image: file.url }
             });
+            return { uploadedBy: metadata.userId, url: file.url };
+        }),
 
-            // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+    // Project Image Uploader: for project showcases, does NOT update user profile
+    projectImageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 1 } })
+        .middleware(async ({ req }) => {
+            let session = await auth.api.getSession({ headers: req.headers });
+            if (!session?.user) throw new UploadThingError("Unauthorized");
+            return { userId: session.user.id };
+        })
+        .onUploadComplete(async ({ metadata, file }) => {
+            // Just return the URL, don't update user table
             return { uploadedBy: metadata.userId, url: file.url };
         }),
 } satisfies FileRouter;
