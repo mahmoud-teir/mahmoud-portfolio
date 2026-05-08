@@ -36,7 +36,7 @@ export async function createProject(data: FormData) {
         })
 
         if (!parsed.success) {
-            return { success: false, error: parsed.error.errors[0]?.message || "Validation failed" }
+            return { success: false, error: parsed.error.issues[0]?.message || "Validation failed" }
         }
 
         const project = await prisma.project.create({
@@ -53,6 +53,7 @@ export async function createProject(data: FormData) {
 
         revalidatePath("/projects")
         revalidatePath("/")
+        // @ts-ignore - Next.js types mismatch
         revalidateTag(CACHE_TAGS.PROJECTS)
         return { success: true, project }
     } catch (error) {
@@ -78,7 +79,7 @@ export async function updateProject(id: string, data: FormData) {
         })
 
         if (!parsed.success) {
-            return { success: false, error: parsed.error.errors[0]?.message || "Validation failed" }
+            return { success: false, error: parsed.error.issues[0]?.message || "Validation failed" }
         }
 
         const project = await prisma.project.update({
@@ -97,6 +98,7 @@ export async function updateProject(id: string, data: FormData) {
         revalidatePath("/projects")
         revalidatePath("/")
         revalidatePath(`/admin/dashboard`)
+        // @ts-ignore - Next.js types mismatch
         revalidateTag(CACHE_TAGS.PROJECTS)
         return { success: true, project }
     } catch (error) {
@@ -124,6 +126,7 @@ export async function deleteProject(id: string) {
         revalidatePath("/projects")
         revalidatePath("/")
         revalidatePath(`/admin/dashboard`)
+        // @ts-ignore - Next.js types mismatch
         revalidateTag(CACHE_TAGS.PROJECTS)
         return { success: true }
     } catch (error) {

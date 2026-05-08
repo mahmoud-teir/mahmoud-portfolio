@@ -32,7 +32,7 @@ export async function createExperience(data: FormData) {
         })
 
         if (!parsed.success) {
-            return { success: false, error: parsed.error.errors[0]?.message || "Validation failed" }
+            return { success: false, error: parsed.error.issues[0]?.message || "Validation failed" }
         }
 
         const experience = await prisma.experience.create({
@@ -41,6 +41,7 @@ export async function createExperience(data: FormData) {
 
         revalidatePath("/admin/experience")
         revalidatePath("/")
+        // @ts-ignore - Next.js types mismatch
         revalidateTag(CACHE_TAGS.EXPERIENCES)
         return { success: true, experience }
     } catch (error) {
@@ -64,7 +65,7 @@ export async function updateExperience(id: string, data: FormData) {
         })
 
         if (!parsed.success) {
-            return { success: false, error: parsed.error.errors[0]?.message || "Validation failed" }
+            return { success: false, error: parsed.error.issues[0]?.message || "Validation failed" }
         }
 
         const experience = await prisma.experience.update({
@@ -74,6 +75,7 @@ export async function updateExperience(id: string, data: FormData) {
 
         revalidatePath("/admin/experience")
         revalidatePath("/")
+        // @ts-ignore - Next.js types mismatch
         revalidateTag(CACHE_TAGS.EXPERIENCES)
         return { success: true, experience }
     } catch (error) {
@@ -88,6 +90,7 @@ export async function deleteExperience(id: string) {
         await prisma.experience.delete({ where: { id } })
         revalidatePath("/admin/experience")
         revalidatePath("/")
+        // @ts-ignore - Next.js types mismatch
         revalidateTag(CACHE_TAGS.EXPERIENCES)
         return { success: true }
     } catch (error) {

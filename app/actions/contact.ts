@@ -29,7 +29,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
     })
 
     if (!parsed.success) {
-        const errorMessage = parsed.error.errors[0]?.message || 'Invalid form data.'
+        const errorMessage = parsed.error.issues[0]?.message || 'Invalid form data.'
         return { error: errorMessage, success: false }
     }
 
