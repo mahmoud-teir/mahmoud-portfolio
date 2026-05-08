@@ -9,16 +9,11 @@ import { recoveryEmailTemplate, magicLinkEmailTemplate } from "./email-templates
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const auth = betterAuth({
-    baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || (process.env.NODE_ENV === 'production' ? "https://mahmoud-teir.vercel.app" : "http://localhost:3000"),
+    baseURL: process.env.BETTER_AUTH_URL || process.env.NEXT_PUBLIC_APP_URL || "https://mahmoud-teir.vercel.app/",
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
-    trustedOrigins: [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://mahmoud-teir.vercel.app",
-        "https://mahmoud-portfolio-phi.vercel.app"
-    ],
+    trustedOrigins: ["http://localhost:3000", "http://127.0.0.1:3000", "https://mahmoud-teir.vercel.app"],
     user: {
         additionalFields: {
             cvUrl: {
@@ -34,20 +29,24 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         sendResetPassword: async ({ user, url, token }, request) => {
+            console.log("[RESET] Sending reset email to:", user.email);
+            console.log("[RESET] Reset URL:", url);
+
             if (!process.env.RESEND_API_KEY) {
                 console.warn("⚠️ RESEND_API_KEY not set. Password Reset URL:", url);
                 return;
             }
 
             try {
-                await resend.emails.send({
+                const result = await resend.emails.send({
                     from: "onboarding@resend.dev",
                     to: user.email,
                     subject: "MAHMOUD.DEV // Password Reset Protocol",
                     html: recoveryEmailTemplate(url),
                 });
+                console.log("[RESET] Email sent successfully:", result);
             } catch (error) {
-                console.error("Failed to send recovery email via Resend:", error);
+                console.error("[RESET] Failed to send recovery email:", error);
             }
         },
         databaseHooks: {
