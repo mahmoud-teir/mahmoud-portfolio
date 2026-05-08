@@ -67,8 +67,7 @@ export default function AdminSidebar({ user }: { user: any }) {
 
             <aside className={`
                 w-64 bg-black text-white h-screen fixed left-0 top-0 flex flex-col border-r-4 border-black z-[60] overflow-hidden font-mono text-left transition-transform duration-300
-                lg:translate-x-0
-                ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+                ${isOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0
             `}>
                 {/* Header / Brand */}
                 <div className="p-8 border-b-4 border-white/10 relative overflow-hidden group">
